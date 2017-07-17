@@ -1,16 +1,21 @@
 package edu.digipen.coleshelly;
 
 import edu.digipen.gameobject.GameObject;
-import edu.digipen.math.Vec2;
 
 /**
  * Created by jake.ostrow on 7/17/2017.
  */
 public class Car extends GameObject
 {
-	public Car(Vec2 position)
+	public Car()
 	{
-		super("Car", 20, 20, "square.png");
+		super("Car", 48 * 2, 24 * 2, "car.png");
+	}
+
+	@Override
+	public void update(float dt)
+	{
+
 	}
 
 }
