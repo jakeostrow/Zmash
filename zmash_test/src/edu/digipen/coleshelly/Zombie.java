@@ -1,6 +1,5 @@
 package edu.digipen.coleshelly;
 
-import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.math.Vec2;
@@ -16,12 +15,10 @@ public class Zombie extends GameObject
 		// Call the base constructor
 		super("Ball", 40, 40, "Ball.png");
 
-		SoundManager.addSoundEffect("I Want Brains-SoundBible.com-814171004.mp3", ".wav");
 	}
 
 	@Override public void initialize()
 	{
-		SoundManager.playBackgroundSound("BG");
 	}
 
 	@Override
