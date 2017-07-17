@@ -15,6 +15,9 @@ public class Level1 extends GameLevel
 		// Add car to level
 		GameObject car = new Car();
 		ObjectManager.addGameObject(car);
+
+		GameObject zombie = new Zombie();
+		ObjectManager.addGameObject(zombie);
 	}
 
 	@Override public void initialize()
