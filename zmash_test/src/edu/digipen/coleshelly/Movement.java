@@ -108,17 +108,7 @@ public class Movement extends GameObject
 		// decelerate car's rotation
 		if (turnSpeed != 0)
 		{
-			if (turnSpeed < 0)
-			{
-				// move turnSpeed up to zero
-				turnSpeed += 0.05f;
-			}
-
-			if (turnSpeed > 0)
-			{
-				// move turnSpeed down to zero
-				turnSpeed -= 0.05f;
-			}
+			turnSpeed *= 0.96f;
 		}
 
 		// turn based on speed
