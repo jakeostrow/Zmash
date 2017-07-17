@@ -13,7 +13,11 @@ public class Car extends Movement
 	@Override
 	public void update(float dt)
 	{
+		// move car through movement class
 		checkInput(dt);
+
+		// camera follow
+//		this.setPosition(Graphics.getCameraPosition());
 	}
 
 }
