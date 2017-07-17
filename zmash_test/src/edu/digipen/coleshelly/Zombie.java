@@ -23,16 +23,17 @@ public class Zombie extends GameObject
 	{
 		SoundManager.playBackgroundSound("BG");
 	}
+
 	@Override
 	public void update(float dt)
 	{
-		GameObject paddle = ObjectManager.getGameObjectByName("Car");
+		GameObject zombie = ObjectManager.getGameObjectByName("Car");
 
 		// Compute the vector from the enemy to the paddle
 		// THIS IS P - E
 		Vec2 vector = new Vec2();
-		vector.setX(paddle.getPositionX() - this.getPositionX());
-		vector.setY(paddle.getPositionY() - this.getPositionY());
+		vector.setX(zombie.getPositionX() - this.getPositionX());
+		vector.setY(zombie.getPositionY() - this.getPositionY());
 		// Get the unit vector!
 		vector.normalize();
 
