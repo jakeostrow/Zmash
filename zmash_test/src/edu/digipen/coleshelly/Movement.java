@@ -16,7 +16,8 @@ public class Movement extends GameObject
 	private Vec2 Velocity = new Vec2(0, 0);
 	private float Speed = 200.0f;
 
-	
+	public float turnSpeed = 0;
+	public float maxTurnSpeed = 1.5f;
 
 	public Movement(String name_, int width_, int height_, String textureName_)
 	{
@@ -53,6 +54,8 @@ public class Movement extends GameObject
 
 		boolean forward = InputManager.isPressed(KeyEvent.VK_UP);
 		boolean backward = InputManager.isPressed(KeyEvent.VK_DOWN);
+		boolean left = InputManager.isPressed(KeyEvent.VK_LEFT);
+		boolean right = InputManager.isPressed(KeyEvent.VK_RIGHT);
 
 		// Are we supposed to move
 		if (forward || backward)
@@ -76,15 +79,22 @@ public class Movement extends GameObject
 			}
 
 			// Rotate Left
-			if (InputManager.isPressed(KeyEvent.VK_LEFT))
+			if (left || right)
 			{
-				updateDir(3.0f);
-			}
-
-			// Rotate Right
-			if (InputManager.isPressed(KeyEvent.VK_RIGHT))
-			{
-				updateDir(-3.0f);
+				if (left)
+				{
+					if (turnSpeed < maxTurnSpeed)
+					{
+						turnSpeed += 0.1f;
+					}
+				}
+				if (right)
+				{
+					if (turnSpeed > -maxTurnSpeed)
+					{
+						turnSpeed -= 0.1f;
+					}
+				}
 			}
 		}
 
@@ -94,6 +104,25 @@ public class Movement extends GameObject
 			Velocity.setX(Velocity.getX() * 0.96f);
 			Velocity.setY(Velocity.getY() * 0.96f);
 		}
+
+		// decelerate car's rotation
+		if (turnSpeed != 0)
+		{
+			if (turnSpeed < 0)
+			{
+				// move turnSpeed up to zero
+				turnSpeed += 0.05f;
+			}
+
+			if (turnSpeed > 0)
+			{
+				// move turnSpeed down to zero
+				turnSpeed -= 0.05f;
+			}
+		}
+
+		// turn based on speed
+		updateDir(turnSpeed);
 
 		setPositionX(getPositionX() + Velocity.getX() * dt);
 		setPositionY(getPositionY() + Velocity.getY() * dt);
