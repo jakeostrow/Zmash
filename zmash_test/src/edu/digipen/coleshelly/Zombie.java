@@ -2,7 +2,6 @@ package edu.digipen.coleshelly;
 
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
-import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 
 /**
@@ -17,8 +16,6 @@ public class Zombie extends GameObject
 	// Current Health
 	public int ZombieHealth = 1;
 
-
-
 	public Zombie()
 	{
 		// Call the base constructor
@@ -32,8 +29,7 @@ public class Zombie extends GameObject
 		setPosition(0, 0);
 	}
 
-	@Override
-	public void update(float dt)
+	@Override public void update(float dt)
 	{
 		GameObject zombie = ObjectManager.getGameObjectByName("Car");
 
@@ -105,16 +101,6 @@ public class Zombie extends GameObject
 		{
 			ZombieHealth -= damage;
 		}
-	}
-
-	@Override
-	public void collisionReaction(GameObject collidedWith)
-	{
-		float x = PFRandom.randomRange(-3, 3);
-		float y = PFRandom.randomRange(-3, 3);
-
-		this.setPositionX(this.getPositionX() + x);
-		this.setPositionY(this.getPositionY() + y);
 	}
 }
 
