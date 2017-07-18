@@ -10,9 +10,9 @@ import edu.digipen.graphics.Graphics;
 public class Car extends Movement
 {
 	// Maximum Health
-	int maxHealth = 10000;
+	int MaxHealth = 10000;
 	// Current Health
-	int health = 10000;
+	int Health = 10000;
 
 	public Car()
 	{
@@ -39,7 +39,7 @@ public class Car extends Movement
 		if (damage > 0)
 		{
 			// subtract damage from health
-			health -= damage;
+			Health -= damage;
 		}
 	}
 
@@ -49,8 +49,7 @@ public class Car extends Movement
 		if (amount > 0)
 		{
 			// add health by amount
-			health += amount;
+			Health += amount;
 		}
 	}
-
 }
