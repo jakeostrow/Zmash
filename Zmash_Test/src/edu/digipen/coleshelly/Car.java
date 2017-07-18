@@ -1,5 +1,7 @@
 package edu.digipen.coleshelly;
 
+import edu.digipen.gameobject.GameObject;
+import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
 
 /**
@@ -14,11 +16,11 @@ public class Car extends Movement
 
 	public Car()
 	{
-		super("Car", 48 * 2, 48 * 2, "carSpritesheetSmall.png");
+		super("Car", 20, 20, "");
 
-		// Set as animation
-		this.animationData.numberOfColumns = 24;
-		this.animationData.numberOfRows = 1;
+		// add facade to front
+		GameObject carFacade = new CarFacade();
+		ObjectManager.addGameObject(carFacade);
 	}
 
 	@Override
