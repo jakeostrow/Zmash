@@ -1,6 +1,5 @@
-.idea/
-Zmash_Test/.idea/
-*.xml
+.idea/workspace.xml
+Zmash_Test/.idea/tasks.xml
 Zmash_Test/.idea/workspace.xml
 zmash_test/out/
 Zmash_Test/out/
