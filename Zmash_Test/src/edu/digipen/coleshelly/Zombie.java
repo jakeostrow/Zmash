@@ -20,6 +20,15 @@ public class Zombie extends GameObject
 	// Damage
 	public int Damage = 1;
 
+	// bob time
+	public float bobTime = 0.2f;
+
+	// Time between bobs
+	public float bobTimer = bobTime;
+
+	// Whether or not zombie is bobbing up, if not zombie is bobbing down
+	boolean bobUp = true;
+
 
 	public Zombie()
 	{
@@ -64,6 +73,28 @@ public class Zombie extends GameObject
 					PFRandom.randomRange(-400, 400));
 		}
 
+		// if timer reaches zero
+		if (bobTimer < 0)
+		{
+			// toggle bob
+			bobUp = !bobUp;
+
+			// reset bob timer
+			bobTimer = bobTime;
+		}
+
+		// If bobup is true, bob up. else, bob down
+		if (bobUp)
+		{
+			this.setPositionY(this.getPositionY() + 0.4f);
+		}
+		else
+		{
+			this.setPositionY(this.getPositionY() - 0.4f);
+		}
+
+		//  decrement timer by time
+		bobTimer -= dt;
 	}
 
 	/**
@@ -140,6 +171,11 @@ public class Zombie extends GameObject
 		{
 			// Subtract damage from health
 			ZombieHealth -= Damage;
+
+			if (ZombieHealth < 0)
+			{
+				this.kill();
+			}
 		}
 	}
 }
