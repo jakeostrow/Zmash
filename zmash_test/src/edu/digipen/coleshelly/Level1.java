@@ -59,7 +59,6 @@ public class Level1 extends GameLevel
 	{
 
 	}
-<<<<<<< HEAD
 
 	@Override public void initialize()
 	{
@@ -76,6 +75,4 @@ public class Level1 extends GameLevel
 
 	}
 }
-=======
-}
->>>>>>> cf4a023d9cc4459eed5f8b2fae358b1ea3caf004
+
