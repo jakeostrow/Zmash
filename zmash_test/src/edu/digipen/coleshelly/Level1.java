@@ -28,7 +28,7 @@ public class Level1 extends GameLevel
 		ParticleSystem ps = ParticleSystem.create("ParticleSystem.json", "ParticleProperties.json", emitter);
 		ObjectManager.addGameObject(ps);
 
-		//////////////////////////// LEVEL ////////////////////////////\
+		//////////////////////////// LEVEL ////////////////////////////
 		// Add car to level
 		GameObject car = new Car();
 		ObjectManager.addGameObject(car);

@@ -2,6 +2,7 @@ package edu.digipen.coleshelly;
 
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
+import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 
 /**
@@ -18,6 +19,15 @@ public class Zombie extends GameObject
 
 	// Damage
 	public int Damage = 1;
+
+	// bob time
+	public float bobTime = 0.2f;
+
+	// Time between bobs
+	public float bobTimer = bobTime;
+
+	// Whether or not zombie is bobbing up, if not zombie is bobbing down
+	boolean bobUp = true;
 
 
 	public Zombie()
@@ -48,7 +58,62 @@ public class Zombie extends GameObject
 		// Use the computed vector to move the enemy towards the player
 		this.setPositionX(this.getPositionX() + vector.getX());
 		this.setPositionY(this.getPositionY() + vector.getY());
+
+
+		// Get the car from the object manager
+		GameObject car = ObjectManager
+				.getGameObjectByName("Car");
+
+		// If the result from checkRectangleRectangleCollision is true
+		if (checkRectangleRectangleCollision(this.getPosition(), this.getWidth() / 2, this.getHeight() / 2,
+				car.getPosition(), car.getWidth() / 2, car.getHeight() / 2))
+		{
+			// Reset the position of the horizontal rectangle to (0,0)
+			car.setPosition(PFRandom.randomRange(-400, 400),
+					PFRandom.randomRange(-400, 400));
+		}
+
+		// if timer reaches zero
+		if (bobTimer < 0)
+		{
+			// toggle bob
+			bobUp = !bobUp;
+
+			// reset bob timer
+			bobTimer = bobTime;
+		}
+
+		// If bobup is true, bob up. else, bob down
+		if (bobUp)
+		{
+			this.setPositionY(this.getPositionY() + 0.4f);
+		}
+		else
+		{
+			this.setPositionY(this.getPositionY() - 0.4f);
+		}
+
+		//  decrement timer by time
+		bobTimer -= dt;
 	}
+
+	/**
+	 * ************************************************************************
+	 * This function determines whether or not two objects with rectangular
+	 * colliders are colliding.
+	 *
+	 * @param r1Position   - The position (x,y coordinate) of the first
+	 *                     rectangle
+	 * @param r1HalfWidth  - The half width of the first rectangle
+	 * @param r1HalfHeight - The half height of the first rectangle
+	 * @param r2Position   - The position (x,y coordinate) of the second
+	 *                     rectangle
+	 * @param r2HalfWidth  - The half width of the second rectangle
+	 * @param r2HalfHeight - The half height of the second rectangle
+	 * @return TRUE if the two rectangles are colliding; FALSE if they are NOT
+	 * colliding
+	 * ************************************************************************
+	 */
 
 	boolean checkRectangleRectangleCollision(Vec2 r1Position, float r1HalfWidth,
 			float r1HalfHeight, Vec2 r2Position, float r2HalfWidth, float r2HalfHeight)
@@ -101,9 +166,16 @@ public class Zombie extends GameObject
 
 	public void applyDamage(int Damage)
 	{
+		// Check that damage is positive
 		if (Damage > 0)
 		{
+			// Subtract damage from health
 			ZombieHealth -= Damage;
+
+			if (ZombieHealth < 0)
+			{
+				this.kill();
+			}
 		}
 	}
 }
