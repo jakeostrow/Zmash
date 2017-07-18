@@ -21,7 +21,7 @@ public class Movement extends GameObject
 
 	public Movement(String name_, int width_, int height_, String textureName_)
 	{
-		super(name_, width_, height_, textureName_);
+		super(name_, width_, height_, textureName_, 24, 1, 24, 1);
 		Acceleration.scale(Speed);
 	}
 
@@ -128,7 +128,7 @@ public class Movement extends GameObject
 		// Update the direction of ship
 		// Need to change to Radians for cos and sin
 		// + 90, because the image is rotated 90 degrees from expected angle. it is an offset.
-		rot = (float)Math.toRadians(rot + 90);
+		rot = (float)Math.toRadians(rot);
 
 		// Getting the unit length vector using angle (a vector of length one in the dir in which ship is facing)
 		float x = (float)Math.cos(rot);

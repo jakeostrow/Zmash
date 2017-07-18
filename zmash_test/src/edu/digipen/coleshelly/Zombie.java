@@ -13,7 +13,7 @@ public class Zombie extends GameObject
 	public Zombie()
 	{
 		// Call the base constructor
-		super("Rectangle", 40, 40, "GreenRectangle.jpg");
+		super("Zombie", 221 / 8, 391 / 8, "zombie.png");
 	}
 
 	@Override public void initialize()

@@ -14,7 +14,11 @@ public class Car extends Movement
 
 	public Car()
 	{
-		super("Car", 24 * 2, 48 * 2, "car.png");
+		super("Car", 48 * 2, 48 * 2, "carSpritesheetSmall.png");
+
+		// Set as animation
+		this.animationData.numberOfColumns = 24;
+		this.animationData.numberOfRows = 1;
 	}
 
 	@Override

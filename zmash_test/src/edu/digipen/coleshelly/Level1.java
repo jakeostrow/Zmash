@@ -34,7 +34,7 @@ public class Level1 extends GameLevel
 		ObjectManager.addGameObject(car);
 
 		// Add rock
-		GameObject rock = new CircleObstacle(30, 30, "BrownSquare.jpg", true);
+		GameObject rock = new CircleObstacle(30, 30, "rock.png", true);
 		rock.setPosition(80, 80);
 		ObjectManager.addGameObject(rock);
 
