@@ -1,0 +1,40 @@
+{
+  "name": "Particle",
+  "objectWidth": "25",
+  "objectHeight": "25",
+  "textureName": "particle.png",
+  "totalFrames": "1",
+  "numberOfRows": "1",
+  "numberOfColumns": "1",
+  "frameLifetime": "0.0",
+  "minLifetime": "0.5",
+  "maxLifetime": "3",
+  "beginScale":
+  {
+    "x": "0",
+    "y": "0"
+  },
+  "endScale":
+  {
+    "x": "1.0",
+    "y": "1.0"
+  },
+  "beginOpacity": "1",
+  "endOpacity": "0",
+  "beginColor":
+  {
+    "r": "1",
+    "g": "0",
+    "b": "0",
+    "a": "0.7"
+  },
+  "endColor":
+  {
+    "r": ".7",
+    "g": ".5",
+    "b": ".2",
+    "a": "1"
+  },
+  "minMass": "0.2",
+  "maxMass": "0.3"
+}
