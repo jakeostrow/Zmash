@@ -10,16 +10,20 @@ import edu.digipen.math.Vec2;
 
 public class Zombie extends GameObject
 {
-	// Maximum Health
+	// Maximum health
 	public int MaxHealth = 10;
 
-	// Current Health
+	// Current health
 	public int ZombieHealth = 1;
+
+	// Damage
+	public int Damage = 1;
+
 
 	public Zombie()
 	{
 		// Call the base constructor
-		super("Rectangle", 40, 40, "GreenRectangle.jpg");
+		super("Zombie", 40, 40, "zombie.png");
 	}
 
 	@Override public void initialize()
@@ -95,11 +99,11 @@ public class Zombie extends GameObject
 		return true;
 	}
 
-	public void applydamage(int damage)
+	public void applyDamage(int Damage)
 	{
-		if (damage > 0)
+		if (Damage > 0)
 		{
-			ZombieHealth -= damage;
+			ZombieHealth -= Damage;
 		}
 	}
 }
