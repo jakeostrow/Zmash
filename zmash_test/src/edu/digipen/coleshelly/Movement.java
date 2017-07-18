@@ -21,7 +21,7 @@ public class Movement extends GameObject
 
 	public Movement(String name_, int width_, int height_, String textureName_)
 	{
-		super(name_, width_, height_, textureName_, 24, 1, 24, 1);
+		super(name_, width_, height_, textureName_);
 		Acceleration.scale(Speed);
 	}
 
