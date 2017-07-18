@@ -108,17 +108,7 @@ public class Movement extends GameObject
 		// decelerate car's rotation
 		if (turnSpeed != 0)
 		{
-			if (turnSpeed < 0)
-			{
-				// move turnSpeed up to zero
-				turnSpeed += 0.05f;
-			}
-
-			if (turnSpeed > 0)
-			{
-				// move turnSpeed down to zero
-				turnSpeed -= 0.05f;
-			}
+			turnSpeed *= 0.96f;
 		}
 
 		// turn based on speed
@@ -138,7 +128,7 @@ public class Movement extends GameObject
 		// Update the direction of ship
 		// Need to change to Radians for cos and sin
 		// + 90, because the image is rotated 90 degrees from expected angle. it is an offset.
-		rot = (float)Math.toRadians(rot + 90);
+		rot = (float)Math.toRadians(rot);
 
 		// Getting the unit length vector using angle (a vector of length one in the dir in which ship is facing)
 		float x = (float)Math.cos(rot);

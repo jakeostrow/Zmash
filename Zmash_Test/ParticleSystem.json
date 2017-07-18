@@ -1,0 +1,13 @@
+{
+"name": "ParticleSystem",
+"objectWidth": "1",
+"objectHeight": "1",
+"textureName": "none",
+"totalFrames": "1",
+"numberOfRows": "1",
+"numberOfColumns": "1",
+"frameLifetime": "0",
+"numberOfParticles": "100",
+"minLifetime": "0",
+"maxLifetime": "0"
+}
