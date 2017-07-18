@@ -169,6 +169,7 @@ public class Zombie extends GameObject
 		// Check that damage is positive
 		if (Damage > 0)
 		{
+
 			// Subtract damage from health
 			ZombieHealth -= Damage;
 
@@ -178,6 +179,9 @@ public class Zombie extends GameObject
 			}
 		}
 	}
-}
+	public void endGameDropDown()
+	{
 
+	}
+}
 
