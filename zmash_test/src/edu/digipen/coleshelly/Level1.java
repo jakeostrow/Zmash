@@ -43,6 +43,8 @@ public class Level1 extends GameLevel
 		rock.setPosition(80, 80);
 		ObjectManager.addGameObject(rock);
 
+		// I'm making a change
+
 	}
 
 	@Override public void initialize()
