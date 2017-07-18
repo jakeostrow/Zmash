@@ -13,10 +13,12 @@ public class CarTrail extends GameObject
 	public CarTrail(float x, float y, float lifetime)
 	{
 		// Super
-		super("carTrail", 7, 7, "carTrailParticle.png");
+		super("carTrail", 7, 7, "carTrailParticleGray.png");
 
 		// set position
 		this.setPosition(x, y);
+		// set zorder
+		this.setZOrder(-1);
 
 		// set life timer
 		lifeTimer = lifetime;

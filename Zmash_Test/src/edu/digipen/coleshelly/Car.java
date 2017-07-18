@@ -32,7 +32,14 @@ public class Car extends Movement
 		// camera follow
 		Graphics.setCameraPosition(this.getPosition());
 
+		// x offset
+		float xOffset = -(float)Math.cos(Math.toRadians(this.getRotation()));
+		// y offset
+		float yOffset = -(float)Math.sin(Math.toRadians(this.getRotation()));
+
 		// add trail
+		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset, this.getPositionY() + yOffset, 3);
+//		ObjectManager.addGameObject(carTrail1);
 
 	}
 
