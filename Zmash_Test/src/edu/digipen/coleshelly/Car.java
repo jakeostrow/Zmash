@@ -31,6 +31,9 @@ public class Car extends Movement
 
 		// camera follow
 		Graphics.setCameraPosition(this.getPosition());
+
+		// add trail
+
 	}
 
 	public void applyDamage(int damage)

@@ -1,7 +1,6 @@
 package edu.digipen.coleshelly;
 
 import edu.digipen.Game;
-import edu.digipen.level.EmptyLevel;
 
 public class Main {
 

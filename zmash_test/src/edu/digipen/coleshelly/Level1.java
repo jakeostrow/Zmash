@@ -34,7 +34,7 @@ public class Level1 extends GameLevel
 		ObjectManager.addGameObject(car);
 
 		// Add the background
-		GameObject background = new GameObject("Background", 2000, 1000, "backgroundDiagonalSquare.png");
+		GameObject background = new GameObject("Background", 3000, 1500, "backgroundDiagonalSquare.png");
 		background.setZOrder(-1);
 		ObjectManager.addGameObject(background);
 

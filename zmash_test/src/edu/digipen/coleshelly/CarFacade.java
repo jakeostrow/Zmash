@@ -34,13 +34,19 @@ public class CarFacade extends GameObject
 	{
 		// angle of car divided by 7.5 (degrees between each frame) equals the frame that is needed
 		// newFr4meNum
-		int newFrameNum = Math.abs((int)((-carRotation) / 7.5));
+		int newFrameNum = ((int)((-carRotation) / 7.5));
+
+		// if frame num is less than 0, add 48
+		if (newFrameNum < 0)
+		{
+			newFrameNum += 48;
+		}
 
 		// go to frame and stop
 		this.animationData.goToAndStop(newFrameNum);
 
 		// print car rot
-		System.out.println(newFrameNum);
+		System.out.println(carRotation);
 
 	}
 }
