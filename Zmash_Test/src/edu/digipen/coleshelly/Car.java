@@ -1,5 +1,10 @@
 package edu.digipen.coleshelly;
 
+<<<<<<< HEAD
+=======
+import edu.digipen.InputManager;
+import edu.digipen.SoundManager;
+>>>>>>> 5a14e17c18ac16b957a3c110b55649f008e92ba5
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
@@ -20,6 +25,9 @@ public class Car extends Movement
 	private boolean drowning = false;
 	// screen shake timer
 	public float screenShakeTimer = 0;
+
+	private boolean hasPlayed = false;
+
 
 	public Car()
 	{
@@ -147,6 +155,13 @@ public class Car extends Movement
 			GameObject splash = new Splash(new Vec2(this.getPositionX() + PFRandom.randomRange(-20, 20),
 					this.getPositionY() + PFRandom.randomRange(-20, 20)));
 
+			// Play sound once you drown
+			if (hasPlayed == false)
+			{
+				SoundManager.playSoundEffect("WaterSplash");
+
+				hasPlayed = true;
+			}
 			// reset position
 			if (carFacade.getOpacity() < 0)
 			{
@@ -156,6 +171,7 @@ public class Car extends Movement
 				carFacade.setOpacity(1);
 				// reset drowning
 				drowning = false;
+				// Sound has played
 			}
 		}
 

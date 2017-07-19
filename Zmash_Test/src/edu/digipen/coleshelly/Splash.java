@@ -16,6 +16,11 @@ public class Splash extends GameObject
 
 	}
 
+	@Override public void initialize()
+	{
+
+	}
+
 	@Override public void update(float dt)
 	{
 		// fade out
@@ -28,6 +33,7 @@ public class Splash extends GameObject
 		{
 			this.kill();
 		}
+
 	}
 
 }
