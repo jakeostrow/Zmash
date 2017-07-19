@@ -76,7 +76,8 @@ public class Car extends Movement
 		}
 		if (Health < 0)
 		{
-			this.kill();
+			EndGameDropDown endGameDropDown = new EndGameDropDown(false);
+			endGameDropDown.bringDown();
 		}
 	}
 

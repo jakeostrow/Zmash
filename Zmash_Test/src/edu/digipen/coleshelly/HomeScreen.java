@@ -24,6 +24,10 @@ public class HomeScreen extends GameLevel
 		GameObject bg = new GameObject("Title", 2000, 2000, "backgroundSquare.png");
 		bg.setZOrder(-1);
 		ObjectManager.addGameObject(bg);
+
+		GameObject Button = new GameObject("Title", 605 / 2, 75 / 2, "pressToPlayPrompt.png");
+		Button.setPosition(-0, -150);
+		ObjectManager.addGameObject(Button);
 	}
 
 	@Override public void initialize()

@@ -46,14 +46,9 @@ public class Zombie extends GameObject
 	{
 		// Health
 		ZombieHealth = MaxHealth;
-<<<<<<< HEAD
-=======
 
 		// Damage
 		Damage = MaxDamage;
-
-		setPosition(0, 0);
->>>>>>> 1fe022804737ce7ffdffb6dd3f429433e5566e7b
 	}
 
 	@Override public void update(float dt)
@@ -108,7 +103,9 @@ public class Zombie extends GameObject
 
 		//  decrement timer by time
 		bobTimer -= dt;
+
 	}
+
 
 	/**
 	 * ************************************************************************
@@ -192,9 +189,4 @@ public class Zombie extends GameObject
 			}
 		}
 	}
-	public void endGameDropDown()
-	{
-
-	}
 }
-
