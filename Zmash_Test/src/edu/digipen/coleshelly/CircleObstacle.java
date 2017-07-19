@@ -36,7 +36,7 @@ public class CircleObstacle extends GameObject
 		Vec2 carSize = new Vec2(car.getPositionX(), car.getPositionY());
 
 		// check for car - obstacle collision
-		if (checkCircleRectangleCollision(circlePos, circleRadius, carPos, carSize.getX() / 2, carSize.getY() / 2))
+		if (checkCircleRectangleCollision(circlePos, circleRadius, carPos, carSize.getX() / 4, carSize.getX() / 4))
 		{
 			if (destructible)
 			{

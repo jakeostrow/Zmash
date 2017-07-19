@@ -11,8 +11,8 @@ import edu.digipen.math.Vec2;
 
 public class Zombie extends GameObject
 {
-	// speed
-	
+	// Speed of zombie's movement
+	public float Speed = 4;
 
 	// Maximum health
 	public int MaxHealth = 10;
@@ -36,24 +36,22 @@ public class Zombie extends GameObject
 	boolean bobUp = true;
 
 
-	public Zombie(String name)
+	public Zombie(String name, float speed_)
 	{
 		// Call the base constructor
 		super(name, 190 / 15, 408 / 15, "zombie3d.png");
+
+		// set speed
+		Speed = speed_;
 	}
 
 	@Override public void initialize()
 	{
 		// Health
 		ZombieHealth = MaxHealth;
-<<<<<<< HEAD
-=======
 
 		// Damage
 		Damage = MaxDamage;
-
-		setPosition(0, 0);
->>>>>>> 1fe022804737ce7ffdffb6dd3f429433e5566e7b
 	}
 
 	@Override public void update(float dt)
@@ -69,8 +67,8 @@ public class Zombie extends GameObject
 		vector.normalize();
 
 		// Use the computed vector to move the enemy towards the player
-		this.setPositionX(this.getPositionX() + vector.getX());
-		this.setPositionY(this.getPositionY() + vector.getY());
+		this.setPositionX(this.getPositionX() + vector.getX() * Speed);
+		this.setPositionY(this.getPositionY() + vector.getY() * Speed);
 
 
 		// Get the car from the object manager

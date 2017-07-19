@@ -19,6 +19,8 @@ public class CarTrail extends GameObject
 		this.setPosition(x, y);
 		// set zorder
 		this.setZOrder(-1);
+		// color
+		this.setModulationColor(0.75f, 0.7f, 0.65f, 1);
 
 		// set life timer
 		lifeTimer = lifetime;

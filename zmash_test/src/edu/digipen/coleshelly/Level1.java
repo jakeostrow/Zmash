@@ -22,6 +22,11 @@ public class Level1 extends GameLevel
 		{
 			// add a zombie
 			addZombie();
+
+			// Add rock
+			GameObject rock = new CircleObstacle(30, 30, "rock.png", true);
+			rock.setPosition(PFRandom.randomRange(-200, 200),PFRandom.randomRange(-200, 200));
+			ObjectManager.addGameObject(rock);
 		}
 
 		// Explosion particles
@@ -38,14 +43,14 @@ public class Level1 extends GameLevel
 		ObjectManager.addGameObject(car);
 
 		// Add the background
-		GameObject background = new GameObject("Background", 3000, 1500, "backgroundDiagonalSquare.png");
+		GameObject background = new GameObject("Background", 6000, 3000, "landTile.png");
 		background.setZOrder(-2);
 		ObjectManager.addGameObject(background);
 
-		// Add rock
-		GameObject rock = new CircleObstacle(30, 30, "rock.png", true);
-		rock.setPosition(80, 80);
-		ObjectManager.addGameObject(rock);
+		// add the ocean
+		GameObject ocean = new GameObject("Ocean", 12000, 6000, "oceanTile.png");
+		ocean.setZOrder(-3);
+		ObjectManager.addGameObject(ocean);
 
 		// I'm making a change
 
@@ -72,7 +77,7 @@ public class Level1 extends GameLevel
 		Vec2 position = new Vec2(PFRandom.randomRange(-200f, 200f), PFRandom.randomRange(-200f, 200f));
 
 		// add zombie
-		GameObject zombie = new Zombie("Zombie." + position);
+		GameObject zombie = new Zombie("Zombie." + position, PFRandom.randomRange(0.5f, 1.5f));
 		zombie.setPosition(position);
 		ObjectManager.addGameObject(zombie);
 
