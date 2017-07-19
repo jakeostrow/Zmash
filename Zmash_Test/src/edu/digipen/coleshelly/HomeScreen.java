@@ -17,7 +17,7 @@ public class HomeScreen extends GameLevel
 	@Override public void create()
 	{
 		// add title
-		GameObject title = new GameObject("Title", 1472 / 4, 865 / 4, "zmashLogo.png");
+		GameObject title = new GameObject("Title", 1268 / 4, 495 / 4, "zmashLogoBackgroundless.png");
 		ObjectManager.addGameObject(title);
 
 		// add background

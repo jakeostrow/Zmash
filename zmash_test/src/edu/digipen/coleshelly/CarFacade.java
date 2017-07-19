@@ -46,8 +46,5 @@ public class CarFacade extends GameObject
 		// go to frame and stop
 		this.animationData.goToAndStop(newFrameNum);
 
-		// print car rot
-		System.out.println(carRotation);
-
 	}
 }
