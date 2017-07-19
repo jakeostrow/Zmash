@@ -18,7 +18,10 @@ public class Zombie extends GameObject
 	public int ZombieHealth = 1;
 
 	// Damage
-	public int Damage = 1;
+	public int MaxDamage = 15;
+
+	// Current Damage
+	public int Damage = 2;
 
 	// bob time
 	public float bobTime = 0.2f;
@@ -38,7 +41,11 @@ public class Zombie extends GameObject
 
 	@Override public void initialize()
 	{
+		// Health
 		ZombieHealth = MaxHealth;
+
+		// Damage
+		Damage = MaxDamage;
 
 		setPosition(0, 0);
 	}
@@ -164,7 +171,7 @@ public class Zombie extends GameObject
 		return true;
 	}
 
-	public void applyDamage(int Damage)
+	public void applyDamge()
 	{
 		// Check that damage is positive
 		if (Damage > 0)
