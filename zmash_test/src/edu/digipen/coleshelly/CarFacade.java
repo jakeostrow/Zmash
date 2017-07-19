@@ -13,6 +13,9 @@ public class CarFacade extends GameObject
 		// super duper
 		super("CarFacade", 48 * 2, 48 * 2, "carSpritesheetSmall.png", 22, 1, 22, 1);
 
+		// zOrder
+		this.setZOrder(1);
+
 		// Set as animation
 		this.animationData.numberOfColumns = 22;
 		this.animationData.numberOfRows = 1;

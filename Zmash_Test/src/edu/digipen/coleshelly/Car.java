@@ -1,10 +1,6 @@
 package edu.digipen.coleshelly;
 
-<<<<<<< HEAD
-=======
-import edu.digipen.InputManager;
 import edu.digipen.SoundManager;
->>>>>>> 5a14e17c18ac16b957a3c110b55649f008e92ba5
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
@@ -25,7 +21,7 @@ public class Car extends Movement
 	private boolean drowning = false;
 	// screen shake timer
 	public float screenShakeTimer = 0;
-
+	// has the splash sound played?
 	private boolean hasPlayed = false;
 
 
@@ -55,14 +51,14 @@ public class Car extends Movement
 		float rotation2 = (float)Math.toRadians(this.getRotation() + 15);
 
 		// x offset
-		float xOffset1 = (float) (Math.cos(rotation1) * -20);
+		float xOffset1 = (float) (Math.cos(rotation1) * -15);
 		// y offset
-		float yOffset1 = (float) (Math.sin(rotation1) * -20);
+		float yOffset1 = (float) (Math.sin(rotation1) * -15);
 
 		// x offset
-		float xOffset2 = (float)(Math.cos(rotation2) * -20);
+		float xOffset2 = (float)(Math.cos(rotation2) * -15);
 		// y offset
-		float yOffset2 = (float)(Math.sin(rotation2) * -20);
+		float yOffset2 = (float)(Math.sin(rotation2) * -15);
 
 		// x offset
 		float xOffset3 = (float) (Math.cos(rotation1) * 18);
@@ -75,17 +71,17 @@ public class Car extends Movement
 		float yOffset4 = (float)(Math.sin(rotation2) * 18);
 
 		// add trail
-//		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
-//		ObjectManager.addGameObject(carTrail1);
-//
-//		GameObject carTrail2 = new CarTrail(this.getPositionX() + xOffset2, this.getPositionY() + yOffset2, 3);
-//		ObjectManager.addGameObject(carTrail2);
-//
-//		GameObject carTrail3 = new CarTrail(this.getPositionX() + xOffset3, this.getPositionY() + yOffset3, 3);
-//		ObjectManager.addGameObject(carTrail2);
-//
-//		GameObject carTrail4 = new CarTrail(this.getPositionX() + xOffset4, this.getPositionY() + yOffset4, 3);
-//		ObjectManager.addGameObject(carTrail2);
+		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
+		ObjectManager.addGameObject(carTrail1);
+
+		GameObject carTrail2 = new CarTrail(this.getPositionX() + xOffset2, this.getPositionY() + yOffset2, 3);
+		ObjectManager.addGameObject(carTrail2);
+
+		GameObject carTrail3 = new CarTrail(this.getPositionX() + xOffset3, this.getPositionY() + yOffset3, 3);
+		ObjectManager.addGameObject(carTrail2);
+
+		GameObject carTrail4 = new CarTrail(this.getPositionX() + xOffset4, this.getPositionY() + yOffset4, 3);
+		ObjectManager.addGameObject(carTrail2);
 
 		///////////////////////////////// SCREEN SHAKE /////////////////////////////////////////////
 

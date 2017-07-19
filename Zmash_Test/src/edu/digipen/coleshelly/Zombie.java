@@ -2,6 +2,7 @@ package edu.digipen.coleshelly;
 
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
+import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 
 /**
@@ -28,6 +29,15 @@ public class Zombie extends GameObject
 	// Whether or not zombie is bobbing up, if not zombie is bobbing down
 	boolean bobUp = true;
 
+	// Zombie mode; 0 = normal 'point and chase,' 1 = grabbed onto car, 2 = dead;
+	public int zombieMode = 0;
+
+	// Car rope
+	public GameObject rope = new GameObject("Rope", 200, 3, "rope.png");
+
+	// On-car Offset
+	private Vec2 onCarOffset = new Vec2(PFRandom.randomRange(-20, 20), PFRandom.randomRange(-20, 20));
+
 
 	public Zombie(String name, float speed_)
 	{
@@ -36,6 +46,11 @@ public class Zombie extends GameObject
 
 		// set speed
 		Speed = speed_;
+
+		// add rope
+//		ObjectManager.addGameObject(rope);
+		// Opacity
+		rope.setOpacity(0);
 	}
 
 	@Override public void initialize()
@@ -46,34 +61,60 @@ public class Zombie extends GameObject
 
 	@Override public void update(float dt)
 	{
-		///////////////////////////////////// ZOMBIE PATHFINDING ///////////////////////////////////////////
+		/////////////////////////////////////// ESSENTIALS ///////////////////////////////////////////
 
 		// Get the car from the object manager
 		GameObject car = ObjectManager
 				.getGameObjectByName("Car");
 
-		// Compute the vector from the enemy to the paddle
-		// THIS IS P - E
-		Vec2 vector = new Vec2();
-		vector.setX(car.getPositionX() - this.getPositionX());
-		vector.setY(car.getPositionY() - this.getPositionY());
-		// Get the unit vector!
-		vector.normalize();
+		///////////////////////////// ZOMBIE PATH-FINDING ( MODE 0 ) ////////////////////////////////
 
-		// Use the computed vector to move the enemy towards the player
-		this.setPositionX(this.getPositionX() + vector.getX() * Speed);
-		this.setPositionY(this.getPositionY() + vector.getY() * Speed);
+		// CHECK THAT ZOMBIE IS IN CORRECT MODE
+		if (zombieMode == 0)
+		{
+			// Compute the vector from the enemy to the paddle
+			// THIS IS P - E
+			Vec2 vector = new Vec2();
+			vector.setX(car.getPositionX() - this.getPositionX());
+			vector.setY(car.getPositionY() - this.getPositionY());
+			// Get the unit vector!
+			vector.normalize();
 
-		////////////////////////////////// ZOMBIE-CAR COLLISION /////////////////////////////////////////////
+			// Use the computed vector to move the enemy towards the player
+			this.setPositionX(this.getPositionX() + vector.getX() * Speed);
+			this.setPositionY(this.getPositionY() + vector.getY() * Speed);
+		}
+
+		///////////////////////////////// ATTACH TO CAR ( MODE 1 ) /////////////////////////////////////
+
+		// CHECK THAT ZOMBIE IS IN CORRECT MODE
+		if (zombieMode == 1)
+		{
+			// make rope visible
+			rope.setOpacity(1);
+			// move rope to proper location
+			rope.setPosition(car.getPosition());
+			// rope zOrder
+			rope.setZOrder(0);
+
+			// slowly rotate to car's rotation
+			rope.setRotation((car.getRotation() + rope.getRotation()) * 0.1f);
+
+		}
+
+		////////////////////////////////// ZOMBIE-CAR COLLISION /////////////////////////////////////////
 
 		// If the zombie collides with the car
 		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, car.getPosition(), car.getWidth() / 2))
 		{
 			// TAKE HEALTH FROM THE CAR
-			((Car)car).applyDamage(10);
+//			((Car)car).applyDamage(1);
+
+			// attach to the car
+			zombieMode = 1;
 		}
 
-		///////////////////////////////// CAR-ZOMBIE COLLISION //////////////////////////////////////////////\
+		///////////////////////////////// CAR-ZOMBIE COLLISION //////////////////////////////////////////////
 
 		// car rotation
 		float carRotationRadians = (float) Math.toRadians(car.getRotation());
