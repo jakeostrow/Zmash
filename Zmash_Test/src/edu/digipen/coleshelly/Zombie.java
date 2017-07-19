@@ -11,6 +11,9 @@ import edu.digipen.math.Vec2;
 
 public class Zombie extends GameObject
 {
+	// speed
+	
+
 	// Maximum health
 	public int MaxHealth = 10;
 
@@ -30,17 +33,15 @@ public class Zombie extends GameObject
 	boolean bobUp = true;
 
 
-	public Zombie()
+	public Zombie(String name)
 	{
 		// Call the base constructor
-		super("Zombie", 40, 40, "zombie.png");
+		super(name, 190 / 15, 408 / 15, "zombie3d.png");
 	}
 
 	@Override public void initialize()
 	{
 		ZombieHealth = MaxHealth;
-
-		setPosition(0, 0);
 	}
 
 	@Override public void update(float dt)

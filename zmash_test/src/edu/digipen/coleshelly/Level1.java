@@ -3,6 +3,7 @@ package edu.digipen.coleshelly;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.level.GameLevel;
+import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 import edu.digipen.particlesystem.CircleEmitter;
 import edu.digipen.particlesystem.ParticleSystem;
@@ -17,8 +18,11 @@ public class Level1 extends GameLevel
 	{
 		//////////////////////////// TEST ////////////////////////////
 		// Add test zombie to level
-		GameObject zombie = new Zombie();
-		ObjectManager.addGameObject(zombie);
+		for (int i = 0; i < 20; i++)
+		{
+			// add a zombie
+			addZombie();
+		}
 
 		// Explosion particles
 		// Emitter
@@ -60,6 +64,19 @@ public class Level1 extends GameLevel
 	@Override public void uninitialize()
 	{
 
+	}
+
+	public void addZombie()
+	{
+		// generate random position
+		Vec2 position = new Vec2(PFRandom.randomRange(-200f, 200f), PFRandom.randomRange(-200f, 200f));
+
+		// add zombie
+		GameObject zombie = new Zombie("Zombie." + position);
+		zombie.setPosition(position);
+		ObjectManager.addGameObject(zombie);
+
+		System.out.println("Zombie." + position);
 	}
 
 }

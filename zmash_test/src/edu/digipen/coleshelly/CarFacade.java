@@ -11,11 +11,12 @@ public class CarFacade extends GameObject
 	public CarFacade()
 	{
 		// super duper
-		super("CarFacade", 48 * 2, 48 * 2, "carSpritesheetSmall.png", 24, 1, 24, 1);
+		super("CarFacade", 48 * 2, 48 * 2, "carSpritesheetSmall.png", 22, 1, 22, 1);
 
 		// Set as animation
-		this.animationData.numberOfColumns = 24;
+		this.animationData.numberOfColumns = 22;
 		this.animationData.numberOfRows = 1;
+		this.play();
 	}
 
 	@Override public void update(float dt)
@@ -34,12 +35,12 @@ public class CarFacade extends GameObject
 	{
 		// angle of car divided by 7.5 (degrees between each frame) equals the frame that is needed
 		// newFr4meNum
-		int newFrameNum = ((int)((-carRotation) / 7.5));
+		int newFrameNum = ((int)((-carRotation) / 8.18));
 
 		// if frame num is less than 0, add 48
 		if (newFrameNum < 0)
 		{
-			newFrameNum += 48;
+			newFrameNum += 44;
 		}
 
 		// go to frame and stop
