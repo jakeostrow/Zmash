@@ -1,10 +1,6 @@
 package edu.digipen.coleshelly;
 
-<<<<<<< HEAD
-=======
-import edu.digipen.InputManager;
 import edu.digipen.SoundManager;
->>>>>>> 5a14e17c18ac16b957a3c110b55649f008e92ba5
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
@@ -21,10 +17,11 @@ public class Car extends Movement
 	public int MaxHealth = 10;
 	// Current Health
 	public int Health = 0;
-	// is the car drowning
+	// Is the car drowning
 	private boolean drowning = false;
-	// screen shake timer
+	// Screen shake timer
 	public float screenShakeTimer = 0;
+
 
 	private boolean hasPlayed = false;
 
@@ -33,7 +30,7 @@ public class Car extends Movement
 	{
 		super("Car", 20, 20, "");
 
-		// add facade to front
+		// Add facade to front
 		GameObject carFacade = new CarFacade();
 		ObjectManager.addGameObject(carFacade);
 	}
@@ -41,40 +38,40 @@ public class Car extends Movement
 	@Override
 	public void update(float dt)
 	{
-		// move car through movement class
+		// Move car through movement class
 		checkInput(dt);
 
-		// camera follow
+		// Camera follow
 		Graphics.setCameraPosition(this.getPosition());
 
 		/////////////////////////////////// CAR TRAIL ///////////////////////////////////////////
 
-		// rotation
+		// Rotation
 		float rotation1 = (float)Math.toRadians(this.getRotation() - 15);
-		// rotation
+		// Rotation
 		float rotation2 = (float)Math.toRadians(this.getRotation() + 15);
 
-		// x offset
+		// X offset
 		float xOffset1 = (float) (Math.cos(rotation1) * -20);
 		// y offset
 		float yOffset1 = (float) (Math.sin(rotation1) * -20);
 
-		// x offset
+		// X offset
 		float xOffset2 = (float)(Math.cos(rotation2) * -20);
-		// y offset
+		// Y offset
 		float yOffset2 = (float)(Math.sin(rotation2) * -20);
 
-		// x offset
+		// X offset
 		float xOffset3 = (float) (Math.cos(rotation1) * 18);
-		// y offset
+		// Y offset
 		float yOffset3 = (float) (Math.sin(rotation1) * 18);
 
-		// x offset
+		// X offset
 		float xOffset4 = (float)(Math.cos(rotation2) * 18);
-		// y offset
+		// Y offset
 		float yOffset4 = (float)(Math.sin(rotation2) * 18);
 
-		// add trail
+		// Add trail
 //		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
 //		ObjectManager.addGameObject(carTrail1);
 //
@@ -89,21 +86,21 @@ public class Car extends Movement
 
 		///////////////////////////////// SCREEN SHAKE /////////////////////////////////////////////
 
-		// if screen shake timer still has time on it
+		// If screen shake timer still has time on it
 		if (screenShakeTimer > 0)
 		{
-			// shake screen
+			// Shake screen
 			Graphics.setCameraPosition(Graphics.getCameraPosition().getX() + PFRandom.randomRange(-5, 5),
 					                   Graphics.getCameraPosition().getY() + PFRandom.randomRange(-5, 5));
 		}
 
-		// deduct from screen shake timer
+		// Deduct from screen shake timer
 		screenShakeTimer -= dt;
 
 
 		/////////////////////////////////// DROWNING /////////////////////////////////////////////////
 
-		// get the island object
+		// Get the island object
 		GameObject land = ObjectManager.getGameObjectByName("Background");
 
 		// Top right side of island
@@ -151,7 +148,7 @@ public class Car extends Movement
 			// Fade out car
 			carFacade.setOpacity(carFacade.getOpacity() - 0.01f);
 
-			// random splash
+			// Random splash
 			GameObject splash = new Splash(new Vec2(this.getPositionX() + PFRandom.randomRange(-20, 20),
 					this.getPositionY() + PFRandom.randomRange(-20, 20)));
 
@@ -162,27 +159,26 @@ public class Car extends Movement
 
 				hasPlayed = true;
 			}
-			// reset position
+			// Reset position
 			if (carFacade.getOpacity() < 0)
 			{
-				// reset position
+				// Reset position
 				this.setPosition(0, 0);
-				// reset opacity
+				// Reset opacity
 				carFacade.setOpacity(1);
-				// reset drowning
+				// Reset drowning
 				drowning = false;
 				// Sound has played
 			}
 		}
-
 	}
 
 	public void applyDamage(int damage)
 	{
-		// check that damage is positive
+		// Check that damage is positive
 		if (damage > 0)
 		{
-			// subtract damage from health
+			// Subtract damage from health
 			Health -= damage;
 		}
 		if (Health < 0)
@@ -197,10 +193,10 @@ public class Car extends Movement
 
 	public void heal(int amount)
 	{
-		// check that amount is positive
+		// Check that amount is positive
 		if (amount > 0)
 		{
-			// add health by amount
+			// Add health by amount
 			Health += amount;
 		}
 	}
@@ -223,25 +219,25 @@ public class Car extends Movement
 
 	boolean checkPointLineCollision(Vec2 pointPosition, Vec2 lPoint1, Vec2 lPoint2, boolean above)
 	{
-		// rise
+		// Rise
 		float rise = lPoint2.getY() - lPoint1.getY();
 
-		// run
+		// Run
 		float run = lPoint2.getX() - lPoint1.getX();
 
-		// the slope
+		// The slope
 		float m = rise / run;
 
-		// the x location of the point
+		// The x location of the point
 		float x = pointPosition.getX();
 
-		// the y-intercept
+		// The y-intercept
 		float b = lPoint1.getY();
 
 		// Get y from equation
 		float y = (m * x) + b;
 
-		// if checking above
+		// If checking above
 		if (above)
 		{
 			if (y < pointPosition.getY())
@@ -258,7 +254,7 @@ public class Car extends Movement
 		}
 
 
-		// if no return yet, return
+		// If no return yet, return
 		return false;
 	}
 

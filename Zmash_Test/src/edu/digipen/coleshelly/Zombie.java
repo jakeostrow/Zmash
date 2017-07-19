@@ -19,7 +19,7 @@ public class Zombie extends GameObject
 	// Current health
 	public int ZombieHealth = 1;
 
-	// bob time
+	// Bob time
 	public float bobTime = 0.2f;
 
 	// Time between bobs
@@ -75,7 +75,7 @@ public class Zombie extends GameObject
 
 		///////////////////////////////// CAR-ZOMBIE COLLISION //////////////////////////////////////////////\
 
-		// car rotation
+		// Car rotation
 		float carRotationRadians = (float) Math.toRadians(car.getRotation());
 
 		// Collision circle location
@@ -93,13 +93,13 @@ public class Zombie extends GameObject
 
 		//////////////////////////////////////////// BOB ////////////////////////////////////////////////////
 
-		// if timer reaches zero
+		// If timer reaches zero
 		if (bobTimer < 0)
 		{
-			// toggle bob
+			// Roggle bob
 			bobUp = !bobUp;
 
-			// reset bob timer
+			// Reset bob timer
 			bobTimer = bobTime;
 		}
 
@@ -113,7 +113,7 @@ public class Zombie extends GameObject
 			this.setPositionY(this.getPositionY() - 0.4f);
 		}
 
-		//  decrement timer by time
+		// Decrement timer by time
 		bobTimer -= dt;
 
 	}

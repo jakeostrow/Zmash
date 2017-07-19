@@ -14,7 +14,7 @@ import java.awt.event.KeyEvent;
  */
 public class EndGameDropDown extends GameObject
 {
-	// is the dropdown coming down
+	// Is the dropdown coming down
 	boolean dropDown = false;
 
 	public Vec2 position = new Vec2(0.0f, Graphics.getWindowHeight() / 2 + this.getHeight());
@@ -23,10 +23,10 @@ public class EndGameDropDown extends GameObject
 	{
 		super("EndGameDropdownVictory" + victory, 946 / 3, 1222 / 3, "failureDropDown.png");
 
-		// put it in front
+		// Put it in front
 		this.setZOrder(10);
 
-		// position
+		// Position
 		this.setPosition(position);
 
 	}
@@ -43,7 +43,7 @@ public class EndGameDropDown extends GameObject
 			position.setY((0 + position.getY()) * 0.90f);
 		}
 
-		// if it has descended completely, pause game
+		// If it has descended completely, pause game
 		if (this.getPositionY() < 0 + Graphics.getCameraPosition().getY())
 		{
 			// Pause Game
@@ -56,13 +56,13 @@ public class EndGameDropDown extends GameObject
 		placement.setY(position.getY() + Graphics.getCameraPosition().getY());
 		this.setPosition(placement);
 
-		// if space key is pressed
+		// If space key is pressed
 		if (InputManager.isPressed(KeyEvent.VK_SPACE))
 		{
 			// UnPause Game
 			ObjectManager.unpauseAllObjects();
 
-			// reset level
+			// Reset level
 			GameLevelManager.restartLevel();
 
 			System.out.println("level restart");

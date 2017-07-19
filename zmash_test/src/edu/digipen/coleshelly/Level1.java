@@ -49,7 +49,7 @@ public class Level1 extends GameLevel
 		// Add test zombie to level
 		for (int i = 0; i < 20; i++)
 		{
-			// add a zombie
+			// Add a zombie
 			addZombie();
 
 			// Add rock
@@ -64,6 +64,7 @@ public class Level1 extends GameLevel
 
 	}
 
+
 	@Override public void uninitialize()
 	{
 		// Remove unused things
@@ -75,10 +76,10 @@ public class Level1 extends GameLevel
 
 	public void addZombie()
 	{
-		// generate random position
+		// Generate random position
 		Vec2 position = new Vec2(PFRandom.randomRange(-800f, -400f), PFRandom.randomRange(0f, 0f));
 
-		// add zombie
+		// Add zombie
 		GameObject zombie = new Zombie("Zombie", PFRandom.randomRange(0.5f, 1.5f));
 		zombie.setPosition(position);
 		ObjectManager.addGameObject(zombie);
