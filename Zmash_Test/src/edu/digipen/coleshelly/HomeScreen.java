@@ -47,7 +47,7 @@ public class HomeScreen extends GameLevel
 
 	@Override public void update(float v)
 	{
-		// check if space button is pressed
+		// Check if space button is pressed
 		if (InputManager.isTriggered(KeyEvent.VK_SPACE))
 		{
 			// change scene

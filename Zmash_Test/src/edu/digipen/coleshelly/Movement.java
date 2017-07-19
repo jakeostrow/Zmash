@@ -51,14 +51,13 @@ public class Movement extends GameObject
 	{
 		boolean moving = false;
 
-		// update dir at start
+		// Update dir at start
 		updateDir(0.0f);
 
 		boolean forward = InputManager.isPressed(KeyEvent.VK_UP);
 		boolean backward = InputManager.isPressed(KeyEvent.VK_DOWN);
 		boolean left = InputManager.isPressed(KeyEvent.VK_LEFT);
 		boolean right = InputManager.isPressed(KeyEvent.VK_RIGHT);
-
 
 
 
@@ -73,7 +72,6 @@ public class Movement extends GameObject
 				Velocity.setY(Acceleration.getY() * dt + Velocity.getY());
 
 				Velocity.scale(0.99f);
-
 			}
 
 			// Go Backward
@@ -112,13 +110,13 @@ public class Movement extends GameObject
 			Velocity.setY(Velocity.getY() * 0.96f);
 		}
 
-		// decelerate car's rotation
+		// Decelerate car's rotation
 		if (turnSpeed != 0)
 		{
 			turnSpeed *= 0.96f;
 		}
 
-		// turn based on speed
+		// Turn based on speed
 		updateDir(turnSpeed);
 
 		setPositionX(getPositionX() + Velocity.getX() * dt);

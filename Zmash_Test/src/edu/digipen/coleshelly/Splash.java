@@ -23,12 +23,12 @@ public class Splash extends GameObject
 
 	@Override public void update(float dt)
 	{
-		// fade out
+		// Fade out
 		this.setOpacity(this.getOpacity() - 0.01f);
 		// Scale up
 		this.setScale(this.getScale().getX() + 0.1f, this.getScale().getY() + 0.1f);
 
-		// kill when it disappears
+		// Kill when it disappears
 		if (this.getOpacity() < 0)
 		{
 			this.kill();
