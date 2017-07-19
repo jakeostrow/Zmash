@@ -45,6 +45,8 @@ public class Movement extends GameObject
 		Speed = newSpeed;
 	}
 
+	private boolean hasPlayed = false;
+
 	public void checkInput(float dt)
 	{
 		boolean moving = false;
@@ -57,6 +59,10 @@ public class Movement extends GameObject
 		boolean left = InputManager.isPressed(KeyEvent.VK_LEFT);
 		boolean right = InputManager.isPressed(KeyEvent.VK_RIGHT);
 
+
+
+
+
 		// Are we supposed to move
 		if (forward || backward)
 		{
@@ -67,6 +73,7 @@ public class Movement extends GameObject
 				Velocity.setY(Acceleration.getY() * dt + Velocity.getY());
 
 				Velocity.scale(0.99f);
+
 			}
 
 			// Go Backward

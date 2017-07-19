@@ -1,5 +1,6 @@
 package edu.digipen.coleshelly;
 
+import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.level.GameLevel;
@@ -47,12 +48,21 @@ public class Level1 extends GameLevel
 		background.setZOrder(-2);
 		ObjectManager.addGameObject(background);
 
-		// add the ocean
+		// Add the ocean
 		GameObject ocean = new GameObject("Ocean", 12000, 6000, "oceanTile.png");
 		ocean.setZOrder(-3);
 		ObjectManager.addGameObject(ocean);
 
-		// I'm making a change
+		////////////////////////////// SOUNDS ///////////////////////////////
+
+		// Add water splash
+		SoundManager.addSoundEffect("WaterSplash", "WaterSplash.wav");
+
+		// Add seagulls
+		SoundManager.addSoundEffect("Seagulls", "Seagulls.wav");
+
+		// Add car sounds
+		SoundManager.addSoundEffect("SportsCar1Steady", "SportsCar1Steady.wav");
 
 	}
 
