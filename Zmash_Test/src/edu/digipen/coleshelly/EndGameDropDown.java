@@ -1,9 +1,13 @@
 package edu.digipen.coleshelly;
 
+import edu.digipen.InputManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
+import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.Vec2;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Created by cole.shelly on 7/19/2017.
@@ -51,6 +55,18 @@ public class EndGameDropDown extends GameObject
 		placement.setX(position.getX() + Graphics.getCameraPosition().getX());
 		placement.setY(position.getY() + Graphics.getCameraPosition().getY());
 		this.setPosition(placement);
+
+		// if space key is pressed
+		if (InputManager.isPressed(KeyEvent.VK_SPACE))
+		{
+			// UnPause Game
+			ObjectManager.unpauseAllObjects();
+
+			// reset level
+			GameLevelManager.restartLevel();
+
+			System.out.println("level restart");
+		}
 
 	}
 }

@@ -18,6 +18,7 @@ public class HomeScreen extends GameLevel
 	{
 		// add title
 		GameObject title = new GameObject("Title", 1268 / 4, 495 / 4, "zmashLogoBackgroundless.png");
+		title.setPosition(0, 50);
 		ObjectManager.addGameObject(title);
 
 		// add background
@@ -26,7 +27,7 @@ public class HomeScreen extends GameLevel
 		ObjectManager.addGameObject(bg);
 
 		GameObject Button = new GameObject("Title", 605 / 2, 75 / 2, "pressToPlayPrompt.png");
-		Button.setPosition(-0, -150);
+		Button.setPosition(0, -80);
 		ObjectManager.addGameObject(Button);
 	}
 

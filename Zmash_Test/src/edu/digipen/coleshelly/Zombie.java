@@ -2,7 +2,6 @@ package edu.digipen.coleshelly;
 
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
-import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 
 /**
@@ -15,16 +14,10 @@ public class Zombie extends GameObject
 	public float Speed = 4;
 
 	// Maximum health
-	public int MaxHealth = 10;
+	public int MaxHealth = 1;
 
 	// Current health
 	public int ZombieHealth = 1;
-
-	// Damage
-	public int MaxDamage = 15;
-
-	// Current Damage
-	public int Damage = 2;
 
 	// bob time
 	public float bobTime = 0.2f;
@@ -49,20 +42,21 @@ public class Zombie extends GameObject
 	{
 		// Health
 		ZombieHealth = MaxHealth;
-
-		// Damage
-		Damage = MaxDamage;
 	}
 
 	@Override public void update(float dt)
 	{
-		GameObject zombie = ObjectManager.getGameObjectByName("Car");
+		///////////////////////////////////// ZOMBIE PATHFINDING ///////////////////////////////////////////
+
+		// Get the car from the object manager
+		GameObject car = ObjectManager
+				.getGameObjectByName("Car");
 
 		// Compute the vector from the enemy to the paddle
 		// THIS IS P - E
 		Vec2 vector = new Vec2();
-		vector.setX(zombie.getPositionX() - this.getPositionX());
-		vector.setY(zombie.getPositionY() - this.getPositionY());
+		vector.setX(car.getPositionX() - this.getPositionX());
+		vector.setY(car.getPositionY() - this.getPositionY());
 		// Get the unit vector!
 		vector.normalize();
 
@@ -70,19 +64,34 @@ public class Zombie extends GameObject
 		this.setPositionX(this.getPositionX() + vector.getX() * Speed);
 		this.setPositionY(this.getPositionY() + vector.getY() * Speed);
 
+		////////////////////////////////// ZOMBIE-CAR COLLISION /////////////////////////////////////////////
 
-		// Get the car from the object manager
-		GameObject car = ObjectManager
-				.getGameObjectByName("Car");
-
-		// If the result from checkRectangleRectangleCollision is true
-		if (checkRectangleRectangleCollision(this.getPosition(), this.getWidth() / 2, this.getHeight() / 2,
-				car.getPosition(), car.getWidth() / 2, car.getHeight() / 2))
+		// If the zombie collides with the car
+		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, car.getPosition(), car.getWidth() / 2))
 		{
-			// Reset the position of the horizontal rectangle to (0,0)
-			car.setPosition(PFRandom.randomRange(-400, 400),
-					PFRandom.randomRange(-400, 400));
+			// TAKE HEALTH FROM THE CAR
+			((Car)car).applyDamage(10);
 		}
+
+		///////////////////////////////// CAR-ZOMBIE COLLISION //////////////////////////////////////////////\
+
+		// car rotation
+		float carRotationRadians = (float) Math.toRadians(car.getRotation());
+
+		// Collision circle location
+		Vec2 collisionCirclePosition = new Vec2((float) (Math.cos(carRotationRadians) * 30), (float) (Math.sin(carRotationRadians) * 30));
+
+		collisionCirclePosition.setX(collisionCirclePosition.getX() + car.getPositionX());
+		collisionCirclePosition.setY(collisionCirclePosition.getY() + car.getPositionY());
+
+		// If the zombie collides with the car
+		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, collisionCirclePosition, car.getWidth() / 1.5f))
+		{
+			// Take health from zombie
+			this.applyDamage(1);
+		}
+
+		//////////////////////////////////////////// BOB ////////////////////////////////////////////////////
 
 		// if timer reaches zero
 		if (bobTimer < 0)
@@ -110,81 +119,50 @@ public class Zombie extends GameObject
 	}
 
 
-	/**
-	 * ************************************************************************
-	 * This function determines whether or not two objects with rectangular
-	 * colliders are colliding.
-	 *
-	 * @param r1Position   - The position (x,y coordinate) of the first
-	 *                     rectangle
-	 * @param r1HalfWidth  - The half width of the first rectangle
-	 * @param r1HalfHeight - The half height of the first rectangle
-	 * @param r2Position   - The position (x,y coordinate) of the second
-	 *                     rectangle
-	 * @param r2HalfWidth  - The half width of the second rectangle
-	 * @param r2HalfHeight - The half height of the second rectangle
-	 * @return TRUE if the two rectangles are colliding; FALSE if they are NOT
-	 * colliding
-	 * ************************************************************************
-	 */
-
-	boolean checkRectangleRectangleCollision(Vec2 r1Position, float r1HalfWidth,
-			float r1HalfHeight, Vec2 r2Position, float r2HalfWidth, float r2HalfHeight)
+	/***************************************************************************
+	 * This function determines whether or not two objects with circle colliders
+	 * are colliding.
+	 * @param c1Position The position (x, y coordinate) of the first circle
+	 * @param c1Radius	 The radius of the first circle
+	 * @param c2Position The position (x, y coordinate) of the second circle
+	 * @param c2Radius   The radius of the second circle
+	 * @return TRUE if the two circles are colliding; FALSE if they are NOT
+	 * 		   colliding
+	 **************************************************************************/
+	boolean checkCircleCircleCollision(Vec2 c1Position, float c1Radius, Vec2 c2Position,
+			float c2Radius)
 	{
-		float r1LeftCoordinate = r1Position.getX() + r1HalfWidth;
-		//Left: Check if r1's right side is further left than r2's left side
-		//If it is, there can be no collision, so return false.
-		float r2RightCoordinate = r2Position.getX() - r2HalfWidth;
-		//Right: Check if r1's left side is further right than r2's right side
-		//If it is, there can be no collision, so return false.
-		if (r1LeftCoordinate < r2RightCoordinate)
+		// Calculate the squared sum of radius1 and radius2
+		float squaredSum = c1Radius * c1Radius + c2Radius * c2Radius;
+
+		// Calculate the change in x and change in y
+		float changeX = c2Position.getX() - c1Position.getX();
+		float changeY = c2Position.getY() - c1Position.getY();
+
+		// Calculate the distance squared using pythagroean therom x^2 + y^2 = c^2
+		float distanceSquared = changeX * changeX + changeY * changeY;
+
+		// If the distance squared is <= radii squared
+		if (distanceSquared <= squaredSum)
 		{
+			// Return true
+			return true;
+		}
+		else
+		{
+			// Otherwise, return false;
 			return false;
 		}
-
-		float r1RightCoordinate = r1Position.getX() - r1HalfWidth;
-
-		float r2LeftCoordinate = r2Position.getX() + r2HalfWidth;
-
-		if (r1RightCoordinate > r2LeftCoordinate)
-		{
-			return false;
-		}
-		//Bottom: Check if r1's top side is below r2's bottom side
-		//If it is, there can be no collision, so return false.
-		float r1BottomCoordinate = r1Position.getY() + r1HalfHeight;
-
-		float r2TopCoordinate = r2Position.getY() - r2HalfHeight;
-
-		if (r1BottomCoordinate < r2TopCoordinate)
-		{
-			return false;
-		}
-		//Top: Check if r1's bottom side is above r2's top side
-		//If it is, there can be no collision, so return false.
-		float r1TopCoordinate = r1Position.getY() - r1HalfHeight;
-
-		float r2BottomCoordinate = r2Position.getY() + r2HalfHeight;
-
-		if (r1TopCoordinate > r2BottomCoordinate)
-		{
-			return false;
-		}
-		//If none of those conditions are true, return true, as anything left is a collision.
-
-		// DELETE THIS LINE OF CODE WHEN YOU ARE READY!! This is just a place
-		// holder so that your program will compile!!
-		return true;
 	}
 
-	public void applyDamge()
+	public void applyDamage(int damage)
 	{
 		// Check that damage is positive
-		if (Damage > 0)
+		if (damage > 0)
 		{
 
 			// Subtract damage from health
-			ZombieHealth -= Damage;
+			ZombieHealth -= damage;
 
 			if (ZombieHealth < 0)
 			{

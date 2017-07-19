@@ -1,13 +1,11 @@
 package edu.digipen.coleshelly;
 
-import edu.digipen.InputManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
+import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
-
-import java.awt.event.KeyEvent;
 
 /**
  * Created by jake.ostrow on 7/17/2017.
@@ -15,11 +13,13 @@ import java.awt.event.KeyEvent;
 public class Car extends Movement
 {
 	// Maximum Health
-	public int MaxHealth = 10000;
+	public int MaxHealth = 10;
 	// Current Health
-	public int Health = 10000;
+	public int Health = 0;
 	// is the car drowning
 	private boolean drowning = false;
+	// screen shake timer
+	public float screenShakeTimer = 0;
 
 	public Car()
 	{
@@ -67,27 +67,31 @@ public class Car extends Movement
 		float yOffset4 = (float)(Math.sin(rotation2) * 18);
 
 		// add trail
-		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
-		ObjectManager.addGameObject(carTrail1);
-
-		GameObject carTrail2 = new CarTrail(this.getPositionX() + xOffset2, this.getPositionY() + yOffset2, 3);
-		ObjectManager.addGameObject(carTrail2);
-
-		GameObject carTrail3 = new CarTrail(this.getPositionX() + xOffset3, this.getPositionY() + yOffset3, 3);
-		ObjectManager.addGameObject(carTrail2);
-
-		GameObject carTrail4 = new CarTrail(this.getPositionX() + xOffset4, this.getPositionY() + yOffset4, 3);
-		ObjectManager.addGameObject(carTrail2);
+//		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
+//		ObjectManager.addGameObject(carTrail1);
+//
+//		GameObject carTrail2 = new CarTrail(this.getPositionX() + xOffset2, this.getPositionY() + yOffset2, 3);
+//		ObjectManager.addGameObject(carTrail2);
+//
+//		GameObject carTrail3 = new CarTrail(this.getPositionX() + xOffset3, this.getPositionY() + yOffset3, 3);
+//		ObjectManager.addGameObject(carTrail2);
+//
+//		GameObject carTrail4 = new CarTrail(this.getPositionX() + xOffset4, this.getPositionY() + yOffset4, 3);
+//		ObjectManager.addGameObject(carTrail2);
 
 		///////////////////////////////// SCREEN SHAKE /////////////////////////////////////////////
 
-		// if s key is pressed
-		if (InputManager.isPressed(KeyEvent.VK_S))
+		// if screen shake timer still has time on it
+		if (screenShakeTimer > 0)
 		{
 			// shake screen
 			Graphics.setCameraPosition(Graphics.getCameraPosition().getX() + PFRandom.randomRange(-5, 5),
 					                   Graphics.getCameraPosition().getY() + PFRandom.randomRange(-5, 5));
 		}
+
+		// deduct from screen shake timer
+		screenShakeTimer -= dt;
+
 
 		/////////////////////////////////// DROWNING /////////////////////////////////////////////////
 
@@ -153,8 +157,6 @@ public class Car extends Movement
 				// reset drowning
 				drowning = false;
 			}
-
-
 		}
 
 	}
@@ -169,8 +171,11 @@ public class Car extends Movement
 		}
 		if (Health < 0)
 		{
-			EndGameDropDown endGameDropDown = new EndGameDropDown(false);
-			endGameDropDown.bringDown();
+//			EndGameDropDown endGameDropDown = new EndGameDropDown(false);
+//			endGameDropDown.bringDown();
+
+			// Restart level
+			GameLevelManager.restartLevel();
 		}
 	}
 
