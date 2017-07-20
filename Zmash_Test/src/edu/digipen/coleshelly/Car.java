@@ -80,13 +80,8 @@ public class Car extends Movement
 		float xOffset4 = (float)(Math.cos(rotation2) * 18);
 		// Y offset
 		float yOffset4 = (float)(Math.sin(rotation2) * 18);
-<<<<<<< HEAD
-
-		// add trail
-=======
 		
 		// Add trail
->>>>>>> 2cb03ddc572290e953ead8a7c14acf950894be3c
 		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
 		ObjectManager.addGameObject(carTrail1);
 
