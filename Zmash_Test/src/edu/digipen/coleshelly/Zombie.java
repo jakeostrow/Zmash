@@ -123,7 +123,6 @@ public class Zombie extends GameObject
 			// Rope zOrder
 			rope.setZOrder(0);
 
-<<<<<<< HEAD
 			// rope offset
 			Vec2 ropePositionOffset = Tools.GetVectorFromAngle(car.getRotation(), -19);
 
@@ -155,10 +154,6 @@ public class Zombie extends GameObject
 			// zombie trail
 			GameObject carTrail1 = new CarTrail(this.getPositionX(), this.getPositionY(), 0.0001f);
 			ObjectManager.addGameObject(carTrail1);
-=======
-			// Slowly rotate to car's rotation
-			rope.setRotation((car.getRotation() + rope.getRotation()) * 0.1f);
->>>>>>> 2cb03ddc572290e953ead8a7c14acf950894be3c
 
 			// if car swerves
 			if (((Car)car).turnTime > 4.2)
@@ -239,7 +234,6 @@ public class Zombie extends GameObject
 		// Decrement timer by time
 		bobTimer -= dt;
 
-<<<<<<< HEAD
 		if (lifeTimerStarted == true)
 		{
 			// decrement remaining life timer
@@ -276,14 +270,12 @@ public class Zombie extends GameObject
 			hasDied = false;
 		}
 
-=======
 		 if (landingTimer > 0)
 		 {
 			 landingTimer -= dt;
 
 			 SoundManager.playBackgroundSound("Dirt3");
 		 }
->>>>>>> 2cb03ddc572290e953ead8a7c14acf950894be3c
 
 	}
 
@@ -341,7 +333,6 @@ public class Zombie extends GameObject
 
 			if (ZombieHealth == 0)
 			{
-<<<<<<< HEAD
 				// set remaining life timer
 				remainingLifeTimer = 1;
 
@@ -351,12 +342,12 @@ public class Zombie extends GameObject
 				// set the has died variable
 				hasDied = true;
 
-				// make sure the zombie doesnt die multiple times
+				// make sure the zombie doesn't die multiple times
 				ZombieHealth -= 1;
 
 				// subtle screen shake
 				((Car)car).shakeScreen(0.03f);
-=======
+
 				if (bloodIsPlaying == false)
 				{
 					// Play sound
@@ -371,9 +362,6 @@ public class Zombie extends GameObject
 
 					bloodIsPlaying = false;
 				}
-
-				this.kill();
->>>>>>> 2cb03ddc572290e953ead8a7c14acf950894be3c
 			}
 		}
 	}

@@ -85,10 +85,10 @@ public class Movement extends GameObject
 			// Go Backward
 			if (backward)
 			{
-//				Velocity.setX(-Acceleration.getX() * dt + Velocity.getX());
-//				Velocity.setY(-Acceleration.getY() * dt + Velocity.getY());
-//
-//				Velocity.scale(0.99f);
+				//				Velocity.setX(-Acceleration.getX() * dt + Velocity.getX());
+				//				Velocity.setY(-Acceleration.getY() * dt + Velocity.getY());
+				//
+				//				Velocity.scale(0.99f);
 			}
 
 			// Rotate Left
@@ -108,67 +108,60 @@ public class Movement extends GameObject
 					{
 						turnSpeed += 0.1f;
 
-						}
 					}
 				}
-				if (right)
+			}
+			if (right)
+			{
+				if (turnSpeed > -maxTurnSpeed)
 				{
-					if (turnSpeed > -maxTurnSpeed)
-					{
-						turnSpeed -= 0.1f;
-					}
+					turnSpeed -= 0.1f;
 				}
-
-				// turn time
-				turnTime += dt;
 			}
 
-			// Apply friction
-			else
-			{
-				Velocity.setX(Velocity.getX() * 0.96f);
-				Velocity.setY(Velocity.getY() * 0.96f);
-
-				// Stop sound
-				SoundManager.stopBackgroundSound("SportsCar1Steady");
-
-				engineIsPlaying = false;
-
-				// Stop sound
-				SoundManager.stopBackgroundSound("Skid2");
-
-				skidIsPlaying = false;
-
-
-			}
-
-			// Decelerate car's rotation
-			if (turnSpeed != 0)
-			{
-				turnSpeed *= 0.96f;
-			}
-
-			// Turn based on speed
-			updateDir(turnSpeed);
-
-			setPositionX(getPositionX() + Velocity.getX() * dt);
-			setPositionY(getPositionY() + Velocity.getY() * dt);
+			// turn time
+			turnTime += dt;
 		}
 
+		// Apply friction
+		else
+		{
+			Velocity.setX(Velocity.getX() * 0.96f);
+			Velocity.setY(Velocity.getY() * 0.96f);
 
-<<<<<<< HEAD
+			// Stop sound
+			SoundManager.stopBackgroundSound("SportsCar1Steady");
+
+			engineIsPlaying = false;
+
+			// Stop sound
+			SoundManager.stopBackgroundSound("Skid2");
+
+			skidIsPlaying = false;
+
+		}
+
+		// Decelerate car's rotation
+		if (turnSpeed != 0)
+		{
+			turnSpeed *= 0.96f;
+		}
+
+		// Turn based on speed
+		updateDir(turnSpeed);
+
 		setPositionX(getPositionX() + Velocity.getX() * dt);
 		setPositionY(getPositionY() + Velocity.getY() * dt);
 
 		// reset turn time if left or right keys are released
-		if (InputManager.isReleased(KeyEvent.VK_LEFT) || InputManager.isReleased(KeyEvent.VK_RIGHT))
+		if(InputManager.isReleased(KeyEvent.VK_LEFT)||InputManager.isReleased(KeyEvent.VK_RIGHT))
+
 		{
 			// reset turn time
 			turnTime = 0;
 		}
 	}
-=======
->>>>>>> 2cb03ddc572290e953ead8a7c14acf950894be3c
+
 
 	private void updateDir(float angleToChangBy)
 	{
