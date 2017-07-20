@@ -3,6 +3,7 @@ package edu.digipen.coleshelly;
 import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
+import edu.digipen.graphics.Graphics;
 import edu.digipen.level.GameLevel;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
@@ -50,9 +51,6 @@ public class Level1 extends GameLevel
 		// Wind
 		SoundManager.addBackgroundSound("Wind2", "Wind2.wav", true);
 
-		// Skid car sound
-		SoundManager.addBackgroundSound("Skid2", "Skid2.wav", true);
-
 		// Blood Sound
 		SoundManager.addSoundEffect("Gravel3", "Gravel3.wav");
 
@@ -60,6 +58,7 @@ public class Level1 extends GameLevel
 
 	@Override public void initialize()
 	{
+		Graphics.setDrawCollisionData(true);
 		// Add car to level
 		GameObject car = new Car();
 		ObjectManager.addGameObject(car);

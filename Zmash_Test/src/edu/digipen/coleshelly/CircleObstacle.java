@@ -19,6 +19,8 @@ public class CircleObstacle extends GameObject
 
 		// Set "destructible"
 		destructible = destructible_;
+
+		setRectangleCollider(width_ / 2, height_ / 2);
 	}
 
 	@Override public void update(float dt)
@@ -138,5 +140,13 @@ public class CircleObstacle extends GameObject
 
 		// Return the result from the checkPointCircleCollision method.
 		return checkPointCircleCollision(circlePoint, cPos, cRadius);
+	}
+
+	@Override public void collisionReaction(GameObject collidedWith)
+	{
+		if (collidedWith instanceof Car)
+		{
+			this.kill();
+		}
 	}
 }
