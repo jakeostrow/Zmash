@@ -43,7 +43,6 @@ public class CircleObstacle extends GameObject
 				// destroy obstacle upon collision
 				this.destroy();
 
-
 			}
 			else
 			{

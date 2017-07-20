@@ -1,6 +1,7 @@
 package edu.digipen.coleshelly;
 
 import edu.digipen.InputManager;
+import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.math.Vec2;
 
@@ -18,6 +19,9 @@ public class Movement extends GameObject
 
 	public float turnSpeed = 0;
 	public float maxTurnSpeed = 1.5f;
+
+	boolean engineIsPlaying = false;
+	boolean skidIsPlaying = false;
 
 	public Movement(String name_, int width_, int height_, String textureName_)
 	{
@@ -45,8 +49,6 @@ public class Movement extends GameObject
 		Speed = newSpeed;
 	}
 
-	private boolean hasPlayed = false;
-
 	public void checkInput(float dt)
 	{
 		boolean moving = false;
@@ -59,12 +61,17 @@ public class Movement extends GameObject
 		boolean left = InputManager.isPressed(KeyEvent.VK_LEFT);
 		boolean right = InputManager.isPressed(KeyEvent.VK_RIGHT);
 
-
-
-
 		// Are we supposed to move
 		if (forward || backward)
 		{
+			// Play sound
+			if (engineIsPlaying == false)
+			{
+				SoundManager.playBackgroundSound("SportsCar1Steady");
+
+				engineIsPlaying = true;
+			}
+
 			// Go Forward
 			if (forward)
 			{
@@ -86,11 +93,21 @@ public class Movement extends GameObject
 			// Rotate Left
 			if (left || right)
 			{
+				// Play sound
+				if (skidIsPlaying == false)
+				{
+					SoundManager.playBackgroundSound("Skid2");
+
+					skidIsPlaying = true;
+				}
+
 				if (left)
 				{
 					if (turnSpeed < maxTurnSpeed)
 					{
 						turnSpeed += 0.1f;
+
+						}
 					}
 				}
 				if (right)
@@ -101,27 +118,40 @@ public class Movement extends GameObject
 					}
 				}
 			}
+
+			// Apply friction
+			else
+			{
+				Velocity.setX(Velocity.getX() * 0.96f);
+				Velocity.setY(Velocity.getY() * 0.96f);
+
+				// Stop sound
+				SoundManager.stopBackgroundSound("SportsCar1Steady");
+
+				engineIsPlaying = false;
+
+				// Stop sound
+				SoundManager.stopBackgroundSound("Skid2");
+
+				skidIsPlaying = false;
+
+
+			}
+
+			// Decelerate car's rotation
+			if (turnSpeed != 0)
+			{
+				turnSpeed *= 0.96f;
+			}
+
+			// Turn based on speed
+			updateDir(turnSpeed);
+
+			setPositionX(getPositionX() + Velocity.getX() * dt);
+			setPositionY(getPositionY() + Velocity.getY() * dt);
 		}
 
-		// Apply friction
-		else
-		{
-			Velocity.setX(Velocity.getX() * 0.96f);
-			Velocity.setY(Velocity.getY() * 0.96f);
-		}
 
-		// Decelerate car's rotation
-		if (turnSpeed != 0)
-		{
-			turnSpeed *= 0.96f;
-		}
-
-		// Turn based on speed
-		updateDir(turnSpeed);
-
-		setPositionX(getPositionX() + Velocity.getX() * dt);
-		setPositionY(getPositionY() + Velocity.getY() * dt);
-	}
 
 	private void updateDir(float angleToChangBy)
 	{

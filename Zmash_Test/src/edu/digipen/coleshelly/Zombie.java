@@ -1,5 +1,6 @@
 package edu.digipen.coleshelly;
 
+import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.math.PFRandom;
@@ -15,7 +16,7 @@ public class Zombie extends GameObject
 	public float Speed = 4;
 
 	// Maximum health
-	public int MaxHealth = 1;
+	public int MaxHealth = 6;
 
 	// Current health
 	public int ZombieHealth = 1;
@@ -28,6 +29,14 @@ public class Zombie extends GameObject
 
 	// Whether or not zombie is bobbing up, if not zombie is bobbing down
 	boolean bobUp = true;
+
+	// Sound for when zombie lands when bobbing
+	boolean landingIsPlaying = false;
+
+	boolean bloodIsPlaying = false;
+
+	// Time when zombie lands
+	public float landingTimer = 0;
 
 	// Zombie mode; 0 = normal 'point and chase,' 1 = grabbed onto car, 2 = dead;
 	public int zombieMode = 0;
@@ -44,10 +53,10 @@ public class Zombie extends GameObject
 		// Call the base constructor
 		super(name, 190 / 15, 408 / 15, "zombie3d.png");
 
-		// set speed
+		// Set speed
 		Speed = speed_;
 
-		// add rope
+		// Add rope
 //		ObjectManager.addGameObject(rope);
 		// Opacity
 		rope.setOpacity(0);
@@ -90,14 +99,14 @@ public class Zombie extends GameObject
 		// CHECK THAT ZOMBIE IS IN CORRECT MODE
 		if (zombieMode == 1)
 		{
-			// make rope visible
+			// Make rope visible
 			rope.setOpacity(1);
-			// move rope to proper location
+			// Move rope to proper location
 			rope.setPosition(car.getPosition());
-			// rope zOrder
+			// Rope zOrder
 			rope.setZOrder(0);
 
-			// slowly rotate to car's rotation
+			// Slowly rotate to car's rotation
 			rope.setRotation((car.getRotation() + rope.getRotation()) * 0.1f);
 
 		}
@@ -110,7 +119,7 @@ public class Zombie extends GameObject
 			// TAKE HEALTH FROM THE CAR
 //			((Car)car).applyDamage(1);
 
-			// attach to the car
+			// Attach to the car
 			zombieMode = 1;
 		}
 
@@ -137,25 +146,45 @@ public class Zombie extends GameObject
 		// If timer reaches zero
 		if (bobTimer < 0)
 		{
-			// Roggle bob
+			// Toggle bob
 			bobUp = !bobUp;
 
 			// Reset bob timer
 			bobTimer = bobTime;
 		}
 
-		// If bobup is true, bob up. else, bob down
+		// If bob up is true, bob up. else, bob down
 		if (bobUp)
 		{
 			this.setPositionY(this.getPositionY() + 0.4f);
+
+			// Sound play
+			if (landingIsPlaying == false)
+			{
+				SoundManager.playBackgroundSound("Dirt3");
+
+				landingIsPlaying = true;
+			}
 		}
 		else
 		{
 			this.setPositionY(this.getPositionY() - 0.4f);
+
+			// Sound stop
+			SoundManager.stopBackgroundSound("Dirt3");
+
+			landingIsPlaying = false;
 		}
 
 		// Decrement timer by time
 		bobTimer -= dt;
+
+		 if (landingTimer > 0)
+		 {
+			 landingTimer -= dt;
+
+			 SoundManager.playBackgroundSound("Dirt3");
+		 }
 
 	}
 
@@ -207,6 +236,21 @@ public class Zombie extends GameObject
 
 			if (ZombieHealth < 0)
 			{
+				if (bloodIsPlaying == false)
+				{
+					// Play sound
+					SoundManager.playSoundEffect("Gravel3");
+
+					bloodIsPlaying = true;
+				}
+				else
+				{
+					// Stop sound
+					SoundManager.stopBackgroundSound("Gravel3");
+
+					bloodIsPlaying = false;
+				}
+
 				this.kill();
 			}
 		}

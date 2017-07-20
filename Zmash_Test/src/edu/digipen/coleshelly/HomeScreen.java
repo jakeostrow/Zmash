@@ -34,7 +34,7 @@ public class HomeScreen extends GameLevel
 		ObjectManager.addGameObject(Button);
 
 		//////////////SOUND////////////////
-		SoundManager.addBackgroundSound("Credits", "Credits.wav", true);
+
 		// Load LevelMusic into computer's memory
 		SoundManager.addBackgroundSound("Credits", "Credits.wav", true);
 	}
