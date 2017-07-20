@@ -79,9 +79,6 @@ public class Level1 extends GameLevel
 			ObjectManager.addGameObject(rock);
 
 
-
-
-
 			/////////MORE SOUND/////////
 
 			// Play intro sound

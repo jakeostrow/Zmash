@@ -342,7 +342,7 @@ public class Zombie extends GameObject
 				// set the has died variable
 				hasDied = true;
 
-				// make sure the zombie doesnt die multiple times
+				// make sure the zombie doesn't die multiple times
 				ZombieHealth -= 1;
 
 				// subtle screen shake
