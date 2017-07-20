@@ -1,5 +1,6 @@
 package edu.digipen.coleshelly;
 
+import edu.digipen.InputManager;
 import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
@@ -7,6 +8,8 @@ import edu.digipen.graphics.Graphics;
 import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Created by jake.ostrow on 7/17/2017.
@@ -70,7 +73,7 @@ public class Car extends Movement
 		float xOffset4 = (float)(Math.cos(rotation2) * 18);
 		// Y offset
 		float yOffset4 = (float)(Math.sin(rotation2) * 18);
-		
+
 		// add trail
 		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
 		ObjectManager.addGameObject(carTrail1);
@@ -96,6 +99,11 @@ public class Car extends Movement
 
 		// Deduct from screen shake timer
 		screenShakeTimer -= dt;
+
+		if (InputManager.isPressed(KeyEvent.VK_S))
+		{
+			screenShakeTimer = 2;
+		}
 
 
 		/////////////////////////////////// DROWNING /////////////////////////////////////////////////
@@ -256,6 +264,11 @@ public class Car extends Movement
 
 		// If no return yet, return
 		return false;
+	}
+
+	public void shakeScreen(float duration)
+	{
+		screenShakeTimer = duration;
 	}
 
 }

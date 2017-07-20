@@ -1,21 +1,25 @@
 package edu.digipen.coleshelly;
 
+/**
+ * Created by jake.ostrow on 7/20/2017.
+ */
+
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.math.Vec2;
 
 /**
  * Created by jake.ostrow on 7/19/2017.
  */
-public class Splash extends GameObject
+public class BloodPool extends GameObject
 {
-	public Splash(Vec2 position)
+	public BloodPool(Vec2 position)
 	{
-		super("Splash", 40, 20, "landTile.png");
+		super("bloodPool", 10, 5, "bloodPool.png");
 
 		// position
 		this.setPosition(position);
 		// zOrder
-		this.setZOrder(2);
+		this.setZOrder(-1);
 
 	}
 
@@ -27,15 +31,9 @@ public class Splash extends GameObject
 	@Override public void update(float dt)
 	{
 		// Fade out
-		this.setOpacity(this.getOpacity() - 0.01f);
 		// Scale up
-		this.setScale(this.getScale().getX() + 0.1f, this.getScale().getY() + 0.1f);
+		this.setScale((this.getScale().getX() + 0.1f) * 0.99f, (this.getScale().getY() + 0.1f) * 0.99f);
 
-		// Kill when it disappears
-		if (this.getOpacity() < 0)
-		{
-			this.kill();
-		}
 
 	}
 

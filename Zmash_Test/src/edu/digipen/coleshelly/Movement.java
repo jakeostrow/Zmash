@@ -18,6 +18,7 @@ public class Movement extends GameObject
 
 	public float turnSpeed = 0;
 	public float maxTurnSpeed = 1.5f;
+	public float turnTime = 0;
 
 	public Movement(String name_, int width_, int height_, String textureName_)
 	{
@@ -77,10 +78,10 @@ public class Movement extends GameObject
 			// Go Backward
 			if (backward)
 			{
-				Velocity.setX(-Acceleration.getX() * dt + Velocity.getX());
-				Velocity.setY(-Acceleration.getY() * dt + Velocity.getY());
-
-				Velocity.scale(0.99f);
+//				Velocity.setX(-Acceleration.getX() * dt + Velocity.getX());
+//				Velocity.setY(-Acceleration.getY() * dt + Velocity.getY());
+//
+//				Velocity.scale(0.99f);
 			}
 
 			// Rotate Left
@@ -100,6 +101,9 @@ public class Movement extends GameObject
 						turnSpeed -= 0.1f;
 					}
 				}
+
+				// turn time
+				turnTime += dt;
 			}
 		}
 
@@ -121,6 +125,13 @@ public class Movement extends GameObject
 
 		setPositionX(getPositionX() + Velocity.getX() * dt);
 		setPositionY(getPositionY() + Velocity.getY() * dt);
+
+		// reset turn time if left or right keys are released
+		if (InputManager.isReleased(KeyEvent.VK_LEFT) || InputManager.isReleased(KeyEvent.VK_RIGHT))
+		{
+			// reset turn time
+			turnTime = 0;
+		}
 	}
 
 	private void updateDir(float angleToChangBy)

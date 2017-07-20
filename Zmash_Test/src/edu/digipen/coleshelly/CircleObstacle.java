@@ -40,9 +40,11 @@ public class CircleObstacle extends GameObject
 		{
 			if (destructible)
 			{
-				// destroy obstacle upon collision
-				this.destroy();
+				// shake screen
+				((Car)car).shakeScreen(0.02f);
 
+				// destroy obstacle upon collision
+				this.kill();
 
 			}
 			else
