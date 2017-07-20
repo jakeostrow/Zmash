@@ -13,8 +13,11 @@ import edu.digipen.math.Vec2;
 public class Level1 extends GameLevel
 {
 
+	// game start timer
+
 	@Override public void create()
 	{
+
 		//////////////////////////// LEVEL ////////////////////////////
 
 		// Add the background
@@ -112,7 +115,7 @@ public class Level1 extends GameLevel
 	public void addZombie()
 	{
 		// Generate random position
-		Vec2 position = new Vec2(PFRandom.randomRange(-800f, -400f), PFRandom.randomRange(0f, 0f));
+		Vec2 position = new Vec2(PFRandom.randomRange(-800f, -400f), PFRandom.randomRange(-400f, 400f));
 
 		// Add zombie
 		GameObject zombie = new Zombie("Zombie", PFRandom.randomRange(1.5f, 2.5f));

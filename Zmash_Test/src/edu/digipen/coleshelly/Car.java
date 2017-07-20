@@ -5,7 +5,6 @@ import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
-import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 
@@ -20,7 +19,7 @@ public class Car extends Movement
 	public int MaxHealth = 10;
 
 	// Current Health
-	public int Health = 0;
+	public int Health = 10;
 
 	// Is the car drowning
 	private boolean drowning = false;
@@ -33,6 +32,9 @@ public class Car extends Movement
 
 	// Has the explosion sound played?
 	private boolean explosionIsPlayed = false;
+
+	// is the game over?
+	boolean gameOver = false;
 
 
 	public Car()
@@ -118,40 +120,35 @@ public class Car extends Movement
 		// Get the island object
 		GameObject land = ObjectManager.getGameObjectByName("Background");
 
-		// Top right side of island
-		if (checkPointLineCollision(this.getPosition(),
-				                    new Vec2(0, land.getHeight() / 2 + 100),
-				                    new Vec2(land.getWidth() / 2 + 100, 0),
-				                    true))
+		if (land != null)
 		{
-			drowning = true;
-		}
+			// Top right side of island
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, land.getHeight() / 2 + 100),
+					new Vec2(land.getWidth() / 2 + 100, 0), true))
+			{
+				drowning = true;
+			}
 
-		// Top left side of island
-		if (checkPointLineCollision(this.getPosition(),
-				new Vec2(0, land.getHeight() / 2 + 100),
-				new Vec2(-land.getWidth() / 2 - 100, 0),
-				true))
-		{
-			drowning = true;
-		}
+			// Top left side of island
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, land.getHeight() / 2 + 100),
+					new Vec2(-land.getWidth() / 2 - 100, 0), true))
+			{
+				drowning = true;
+			}
 
-		// Bottom right side of island
-		if (checkPointLineCollision(this.getPosition(),
-				new Vec2(0, -land.getHeight() / 2 - 100),
-				new Vec2(land.getWidth() / 2 + 100, 0),
-				false))
-		{
-			drowning = true;
-		}
+			// Bottom right side of island
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, -land.getHeight() / 2 - 100),
+					new Vec2(land.getWidth() / 2 + 100, 0), false))
+			{
+				drowning = true;
+			}
 
-		// Bottom left side of island
-		if (checkPointLineCollision(this.getPosition(),
-				new Vec2(0, -land.getHeight() / 2 - 100),
-				new Vec2(-land.getWidth() / 2 - 100, 0),
-				false))
-		{
-			drowning = true;
+			// Bottom left side of island
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, -land.getHeight() / 2 - 100),
+					new Vec2(-land.getWidth() / 2 - 100, 0), false))
+			{
+				drowning = true;
+			}
 		}
 
 		if (drowning)
@@ -177,13 +174,8 @@ public class Car extends Movement
 			// Reset position
 			if (carFacade.getOpacity() < 0)
 			{
-				// Reset position
-				this.setPosition(0, 0);
-				// Reset opacity
-				carFacade.setOpacity(1);
-				// Reset drowning
-				drowning = false;
-				// Sound has played
+				// kill
+				kill();
 			}
 		}
 	}
@@ -198,8 +190,7 @@ public class Car extends Movement
 		}
 		if (Health < 0)
 		{
-//			EndGameDropDown endGameDropDown = new EndGameDropDown(false);
-//			endGameDropDown.bringDown();
+			kill();
 
 			if (explosionIsPlayed == false)
 			{
@@ -216,10 +207,26 @@ public class Car extends Movement
 				explosionIsPlayed = false;
 			}
 
-			// Restart level
-			GameLevelManager.restartLevel();
 
+		}
+	}
 
+	public void kill()
+	{
+		if (gameOver == false)
+		{
+			// set game over
+//			gameOver = true;
+
+//			// remove all objects
+//			ObjectManager.removeAllObjects();
+//
+//			// go to home screen
+//			GameLevelManager.goToLevel(new HomeScreen());
+
+			this.setPosition(0,0);
+
+			heal(10);
 		}
 	}
 
