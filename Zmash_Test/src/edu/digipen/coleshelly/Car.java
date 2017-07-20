@@ -18,14 +18,21 @@ public class Car extends Movement
 {
 	// Maximum Health
 	public int MaxHealth = 10;
+
 	// Current Health
 	public int Health = 0;
+
 	// Is the car drowning
 	private boolean drowning = false;
+
 	// Screen shake timer
 	public float screenShakeTimer = 0;
-	// has the splash sound played?
+
+	// Has the splash sound played?
 	private boolean hasPlayed = false;
+
+	// Has the explosion sound played?
+	private boolean explosionIsPlayed = false;
 
 
 	public Car()
@@ -53,14 +60,14 @@ public class Car extends Movement
 		// Rotation
 		float rotation2 = (float)Math.toRadians(this.getRotation() + 15);
 
-		// x offset
+		// X offset
 		float xOffset1 = (float) (Math.cos(rotation1) * -15);
-		// y offset
+		// Y offset
 		float yOffset1 = (float) (Math.sin(rotation1) * -15);
 
-		// x offset
+		// X offset
 		float xOffset2 = (float)(Math.cos(rotation2) * -15);
-		// y offset
+		// Y offset
 		float yOffset2 = (float)(Math.sin(rotation2) * -15);
 		// X offset
 
@@ -73,8 +80,13 @@ public class Car extends Movement
 		float xOffset4 = (float)(Math.cos(rotation2) * 18);
 		// Y offset
 		float yOffset4 = (float)(Math.sin(rotation2) * 18);
+<<<<<<< HEAD
 
 		// add trail
+=======
+		
+		// Add trail
+>>>>>>> 2cb03ddc572290e953ead8a7c14acf950894be3c
 		GameObject carTrail1 = new CarTrail(this.getPositionX() + xOffset1, this.getPositionY() + yOffset1, 3);
 		ObjectManager.addGameObject(carTrail1);
 
@@ -194,8 +206,25 @@ public class Car extends Movement
 //			EndGameDropDown endGameDropDown = new EndGameDropDown(false);
 //			endGameDropDown.bringDown();
 
+			if (explosionIsPlayed == false)
+			{
+				// Play sound
+				SoundManager.playSoundEffect("Explosion7");
+
+				explosionIsPlayed = true;
+			}
+			else
+			{
+				// Stop sound
+				SoundManager.stopBackgroundSound("Explosion7");
+
+				explosionIsPlayed = false;
+			}
+
 			// Restart level
 			GameLevelManager.restartLevel();
+
+
 		}
 	}
 
