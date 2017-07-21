@@ -3,7 +3,6 @@ package edu.digipen.coleshelly;
 import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
-import edu.digipen.graphics.Graphics;
 import edu.digipen.level.GameLevel;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
@@ -61,7 +60,6 @@ public class Level1 extends GameLevel
 
 	@Override public void initialize()
 	{
-		Graphics.setDrawCollisionData(true);
 		// Add car to level
 		GameObject car = new Car();
 		ObjectManager.addGameObject(car);
@@ -74,10 +72,10 @@ public class Level1 extends GameLevel
 			addZombie();
 
 			// Add rock
-			// scale
-			int scale = PFRandom.randomRange(30, 60);
+			// Scale
+			int scale = PFRandom.randomRange(50, 80);
 			GameObject rock = new CircleObstacle(scale, scale, "rock.png", true);
-			rock.setPosition(PFRandom.randomRange(-200, 200),PFRandom.randomRange(-200, 200));
+			rock.setPosition(PFRandom.randomRange(-400, 400),PFRandom.randomRange(-400, 400));
 			ObjectManager.addGameObject(rock);
 
 

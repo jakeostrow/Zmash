@@ -28,16 +28,16 @@ public class CircleObstacle extends GameObject
 		// Get car
 		GameObject car = ObjectManager.getGameObjectByName("Car");
 
-		// this object's position
+		// This object's position
 		Vec2 circlePos = this.getPosition();
-		// this object's radius
+		// This object's radius
 		float circleRadius = this.getHeight() / 2;
-		// car's position
+		// Car's position
 		Vec2 carPos = car.getPosition();
-		// car's size
+		// Car's size
 		Vec2 carSize = new Vec2(car.getPositionX(), car.getPositionY());
 
-		// check for car - obstacle collision
+		// Check for car - obstacle collision
 		if (checkCircleRectangleCollision(circlePos, circleRadius, carPos, carSize.getX() / 4, carSize.getX() / 4))
 		{
 			if (destructible)
@@ -124,7 +124,7 @@ public class CircleObstacle extends GameObject
 			circlePoint.setX(rPos.getX() + rHalfWidth);
 		}
 
-		// if the point is above the rectangle
+		// If the point is above the rectangle
 		if (circlePoint.getY() > rPos.getY() + rHalfHeight)
 		{
 			// Reset its position y to the top of the rectangle

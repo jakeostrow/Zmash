@@ -37,7 +37,7 @@ public class Car extends Movement
 	// Has the explosion sound played?
 	private boolean explosionIsPlayed = false;
 
-	// is the game over?
+	// Is the game over?
 	boolean gameOver = false;
 
 	public float Timer = 0;
@@ -54,7 +54,7 @@ public class Car extends Movement
 		ObjectManager.addGameObject(carFacade);
 
 		setRectangleCollider(20, 20);
-		slowDownTimer = new Timer(2);
+		slowDownTimer = new Timer(1.6f);
 		normalSpeed = super.getSpeed();
 	}
 

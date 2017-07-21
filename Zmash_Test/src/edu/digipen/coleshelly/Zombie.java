@@ -33,6 +33,7 @@ public class Zombie extends GameObject
 	// Sound for when zombie lands when bobbing
 	boolean landingIsPlaying = false;
 
+	// Blood sounds
 	boolean bloodIsPlaying = false;
 
 	// Time when zombie lands
@@ -50,13 +51,13 @@ public class Zombie extends GameObject
 	// The last location the car was in
 	private Vec2 lastCarPos = new Vec2();
 
-	// remaining life timer
+	// Remaining life timer
 	private float remainingLifeTimer = 1;
 
-	// has the life timer started
+	// Has the life timer started
 	private boolean lifeTimerStarted = false;
 
-	// has the zombie died
+	// Has the zombie died
 	private boolean hasDied = false;
 
 	// Velocity
@@ -91,7 +92,7 @@ public class Zombie extends GameObject
 		GameObject car = ObjectManager
 				.getGameObjectByName("Car");
 
-		// make rope invisible
+		// Make rope invisible
 		rope.setOpacity(0);
 
 		///////////////////////////// ZOMBIE PATH-FINDING ( MODE 0 ) ////////////////////////////////
@@ -105,6 +106,7 @@ public class Zombie extends GameObject
 			Vec2 vector = new Vec2();
 			vector.setX(car.getPositionX() - this.getPositionX());
 			vector.setY(car.getPositionY() - this.getPositionY());
+
 			// Get the unit vector!
 			vector.normalize();
 
@@ -131,6 +133,7 @@ public class Zombie extends GameObject
 
 			// Add to rope position X
 			rope.setPositionX(rope.getPositionX() + ropePositionOffset.getX());
+
 			// Add to rope position Y
 			rope.setPositionY(rope.getPositionY() + ropePositionOffset.getY());
 
@@ -142,10 +145,13 @@ public class Zombie extends GameObject
 
 			// Rotation that points towards movement
 			float rotation = Tools.GetAngleFromVector(((Movement)car).getMovementVelocity());
+
 			// Add rope offset to rotation
 			rotation += ropeOffset;
+
 			// Let last car pos
 			lastCarPos = car.getPosition();
+
 			// Slowly rotate to car's rotation
 			rope.setRotation((rotation));
 
@@ -191,7 +197,7 @@ public class Zombie extends GameObject
 			}
 		}
 
-		///////////////////////////////// CAR-ZOMBIE COLLISION //////////////////////////////////////////////
+		///////////////////////////////// CAR-ZOMBIE COLLISION ///////////////////////////////////////
 
 		// Car rotation
 		float carRotationRadians = (float) Math.toRadians(car.getRotation());
@@ -207,20 +213,22 @@ public class Zombie extends GameObject
 		{
 			// Car speed
 			Vec2 velocityVector = (((Car)car).getMovementVelocity());
+
 			// Speed
 			float speed = velocityVector.getX() / velocityVector.getY();
+
 			// Absolute value
 			speed = Math.abs(speed);
 
 			// Make sure car is moving, and make sure zombie mode is correct
 			if (speed > 0.8f)
 			{
-//				// Take health from zombie
+			// Take health from zombie
 				this.applyDamage(1);
 			}
 		}
 
-		//////////////////////////////////////////// BOB ////////////////////////////////////////////////////
+		///////////////////////////////////////////// BOB ////////////////////////////////////////////////////
 
 		// If timer reaches zero
 		if (bobTimer < 0)
@@ -260,38 +268,38 @@ public class Zombie extends GameObject
 
 		if (lifeTimerStarted == true)
 		{
-			// decrement remaining life timer
+			// Decrement remaining life timer
 			remainingLifeTimer -= dt;
 		}
 
-		// if remaining life timer < 0
+		// If remaining life timer < 0
 		if (remainingLifeTimer < 0)
 		{
-			// set mode to 'dead'
+			// Set mode to 'dead'
 			zombieMode = 2;
 
 			this.setVelocity(0, 0);
 			this.stop();
 
-			// fade out
+			// Fade out
 			this.setOpacity(0);
 
 			if (hasDied == true)
 			{
-				// add dead facade
+				// Add dead facade
 				GameObject deadZombie = new GameObject("DeadZombie", 244 / 15, 417 / 15, "zombieCrooked1.png");
 				deadZombie.setPosition(this.getPosition());
-				deadZombie.setRotation(90); // rotate on it's side
+				deadZombie.setRotation(90); // Rotate on it's side
 				ObjectManager.addGameObject(deadZombie);
 
-				// add blood pool
+				// Add blood pool
 				GameObject bloodPool = new BloodPool(this.getPosition());
 				ObjectManager.addGameObject(bloodPool);
 
 				((Car)car).shakeScreen(0.03f);
 			}
 
-			// reset has died
+			// Reset has died
 			hasDied = false;
 		}
 
@@ -302,35 +310,35 @@ public class Zombie extends GameObject
 			 SoundManager.playBackgroundSound("Dirt3");
 		 }
 
-		// decay rate
+		// Decay rate
 		float decayRate = 2f;
 
 		// X POSITIVE
 		if (velocity.getX() > 0)
 		{
-			// decay velocity
+			// Decay velocity
 			velocity.setX(velocity.getX() - decayRate);
 		}
 		// X NEGATIVE
 		if (velocity.getX() < 0)
 		{
-			// decay velocity
+			// Decay velocity
 			velocity.setX(velocity.getX() + decayRate);
 		}
 		// Y POSITIVE
 		if (velocity.getY() > 0)
 		{
-			// decay velocity
+			// Decay velocity
 			velocity.setY(velocity.getY() - decayRate);
 		}
 		// Y NEGATIVE
 		if (velocity.getY() < 0)
 		{
-			// decay velocity
+			// Decay velocity
 			velocity.setY(velocity.getY() + decayRate);
 		}
 
-		// set velocity on zombie
+		// Set velocity on zombie
 		this.setVelocity(velocity);
 
 	}
@@ -389,19 +397,19 @@ public class Zombie extends GameObject
 
 			if (ZombieHealth == 0)
 			{
-				// set remaining life timer
+				// Set remaining life timer
 				remainingLifeTimer = 1;
 
-				// start timer
+				// Start timer
 				lifeTimerStarted = true;
 
-				// set the has died variable
+				// Set the has died variable
 				hasDied = true;
 
-				// make sure the zombie doesn't die multiple times
+				// Make sure the zombie doesn't die multiple times
 				ZombieHealth -= 1;
 
-				// subtle screen shake
+				// Subtle screen shake
 				((Car)car).shakeScreen(0.04f);
 
 				if (bloodIsPlaying == false)
