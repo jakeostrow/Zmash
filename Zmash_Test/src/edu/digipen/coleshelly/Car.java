@@ -16,6 +16,8 @@ import java.awt.event.KeyEvent;
 public class Car extends Movement
 {
 
+	// For the resetTimer
+	public float normalSpeed = 0;
 
 	// Maximum Health
 	public int MaxHealth = 10;
@@ -40,7 +42,7 @@ public class Car extends Movement
 
 	public float Timer = 0;
 
-	boolean resetTimer = false;
+	public Timer slowDownTimer;
 
 
 	public Car()
@@ -52,11 +54,17 @@ public class Car extends Movement
 		ObjectManager.addGameObject(carFacade);
 
 		setRectangleCollider(20, 20);
+		slowDownTimer = new Timer(2);
+		normalSpeed = super.getSpeed();
 	}
 
 	@Override
 	public void update(float dt)
 	{
+		if(slowDownTimer.isReady)
+		{
+			setSpeed(normalSpeed);
+		}
 
 		this.Timer -= dt;
 
@@ -191,7 +199,7 @@ public class Car extends Movement
 			// Reset position
 			if (carFacade.getOpacity() < 0)
 			{
-				// kill
+				// Kill
 				kill();
 			}
 		}
@@ -325,14 +333,9 @@ public class Car extends Movement
 		{
 //			getPosition().subtract(
 //					Vec2.scale(super.getMovementVelocity(), super.dt));
-			setSpeed(getSpeed() / 2);
+			setSpeed(normalSpeed / 2);
+			slowDownTimer.reset();
 
-			//if (resetTimer == false)
-			//{
-			//	setSpeed(200);
-			//	resetTimer = true;
-			//}
-			setSpeed(200);
 
 		}
 

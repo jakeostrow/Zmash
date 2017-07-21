@@ -42,10 +42,10 @@ public class CircleObstacle extends GameObject
 		{
 			if (destructible)
 			{
-				// shake screen
-				((Car)car).shakeScreen(0.02f);
+				// Shake screen
+				((Car)car).shakeScreen(0.03f);
 
-				// destroy obstacle upon collision
+				// Destroy obstacle upon collision
 				this.kill();
 
 			}
@@ -107,7 +107,7 @@ public class CircleObstacle extends GameObject
 			rHalfWidth, float rHalfHeight)
 	{
 		// Make a point at the center of the circle. (NOTE: You will have to use
-		// the copy constructor! Vec2 newPoint = new Vec2(cPos);
+		// The copy constructor! Vec2 newPoint = new Vec2(cPos);
 		Vec2 circlePoint = new Vec2(cPos);
 
 		// If the point is off the rectangle to the left

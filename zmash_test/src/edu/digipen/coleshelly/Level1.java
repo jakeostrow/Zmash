@@ -14,7 +14,7 @@ import edu.digipen.math.Vec2;
 public class Level1 extends GameLevel
 {
 
-	// game start timer
+	// Game start timer
 
 	@Override public void create()
 	{

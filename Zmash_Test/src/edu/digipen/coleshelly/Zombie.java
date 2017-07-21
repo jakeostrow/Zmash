@@ -126,51 +126,51 @@ public class Zombie extends GameObject
 			// Rope zOrder
 			rope.setZOrder(0);
 
-			// rope offset
+			// Rope offset
 			Vec2 ropePositionOffset = Tools.GetVectorFromAngle(car.getRotation(), -19);
 
-			// add to rope position X
+			// Add to rope position X
 			rope.setPositionX(rope.getPositionX() + ropePositionOffset.getX());
-			// add to rope position Y
+			// Add to rope position Y
 			rope.setPositionY(rope.getPositionY() + ropePositionOffset.getY());
 
-			// the change in car pos over the y axis
+			// The change in car pos over the y axis
 			float rise = lastCarPos.getY() - car.getPositionY();
 
-			// the change in car pos over the x axis
+			// The change in car pos over the x axis
 			float run = lastCarPos.getX() - car.getPositionX();
 
-			// rotation that points towards movement
+			// Rotation that points towards movement
 			float rotation = Tools.GetAngleFromVector(((Movement)car).getMovementVelocity());
-			// add rope offset to rotation
+			// Add rope offset to rotation
 			rotation += ropeOffset;
-			// let last car pos
+			// Let last car pos
 			lastCarPos = car.getPosition();
-			// slowly rotate to car's rotation
+			// Slowly rotate to car's rotation
 			rope.setRotation((rotation));
 
-			// move zombie onto end of rope
+			// Move zombie onto end of rope
 			Vec2 position = Tools.GetVectorFromAngle(rotation, -100);
 			this.setPosition(rope.getPositionX() + position.getX(),
 					rope.getPositionY() + position.getY());
 
-			// zombie trail
+			// Zombie trail
 			GameObject carTrail1 = new CarTrail(this.getPositionX(), this.getPositionY(), 0.0001f);
 			ObjectManager.addGameObject(carTrail1);
 
-			// if car swerves
+			// If car swerves
 			if (((Car)car).turnTime > 4.2)
 			{
-				// throw zombie off
+				// Throw zombie off
 				zombieMode = 0;
 
-				// turning right
+				// Turning right
 				if (((Car)car).turnSpeed > 0)
 				{
-					// set velocity
+					// Set velocity
 					velocity.set(Tools.GetVectorFromAngle(rope.getRotation() - 90, 300));
 				} else {
-					// set velocity
+					// Set velocity
 					velocity.set(Tools.GetVectorFromAngle(rope.getRotation() + 90, 300));
 
 				}
@@ -205,14 +205,14 @@ public class Zombie extends GameObject
 		// If the zombie collides with the car
 		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, collisionCirclePosition, car.getWidth() / 1.5f))
 		{
-			// car speed
+			// Car speed
 			Vec2 velocityVector = (((Car)car).getMovementVelocity());
-			// speed
+			// Speed
 			float speed = velocityVector.getX() / velocityVector.getY();
-			// absolute value
+			// Absolute value
 			speed = Math.abs(speed);
 
-			// make sure car is moving, and make sure zombie mode is correct
+			// Make sure car is moving, and make sure zombie mode is correct
 			if (speed > 0.8f)
 			{
 //				// Take health from zombie
@@ -402,7 +402,7 @@ public class Zombie extends GameObject
 				ZombieHealth -= 1;
 
 				// subtle screen shake
-				((Car)car).shakeScreen(0.03f);
+				((Car)car).shakeScreen(0.04f);
 
 				if (bloodIsPlaying == false)
 				{

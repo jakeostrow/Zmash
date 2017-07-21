@@ -18,7 +18,7 @@ public class Timer extends GameObject
 	}
 	@Override public void update(float dt)
 	{
-		timer-= dt;
+		timer -= dt;
 		if(timer <= 0)
 		{
 			isReady = true;
