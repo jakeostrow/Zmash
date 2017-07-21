@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;
  */
 public class Car extends Movement
 {
+
+
 	// Maximum Health
 	public int MaxHealth = 10;
 
@@ -36,6 +38,8 @@ public class Car extends Movement
 	// is the game over?
 	boolean gameOver = false;
 
+	public float Timer = 0;
+
 
 	public Car()
 	{
@@ -44,11 +48,21 @@ public class Car extends Movement
 		// Add facade to front
 		GameObject carFacade = new CarFacade();
 		ObjectManager.addGameObject(carFacade);
+
+		setRectangleCollider(20, 20);
 	}
 
 	@Override
 	public void update(float dt)
 	{
+
+		this.Timer -= dt;
+
+		if (Timer < -3)
+		{
+			setSpeed(getSpeed() * 1);
+		}
+
 		// Move car through movement class
 		checkInput(dt);
 
@@ -302,4 +316,16 @@ public class Car extends Movement
 		screenShakeTimer = duration;
 	}
 
+	@Override public void collisionReaction(GameObject collidedWith)
+	{
+		if (collidedWith instanceof CircleObstacle)
+		{
+//			getPosition().subtract(
+//					Vec2.scale(super.getMovementVelocity(), super.dt));
+			setSpeed(getSpeed() / 2);
+
+
+		}
+
+	}
 }

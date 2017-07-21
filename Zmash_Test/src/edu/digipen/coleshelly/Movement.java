@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
  */
 public class Movement extends GameObject
 {
+
 	// Direction in which ship is facing (starts out facing down positive x axis)
 	private Vec2 Acceleration = new Vec2(1, 0);
 	private Vec2 Velocity = new Vec2(0, 0);
@@ -22,7 +23,6 @@ public class Movement extends GameObject
 	public float turnTime = 0;
 
 	boolean engineIsPlaying = false;
-	boolean skidIsPlaying = false;
 
 	public Movement(String name_, int width_, int height_, String textureName_)
 	{
@@ -94,13 +94,6 @@ public class Movement extends GameObject
 			// Rotate Left
 			if (left || right)
 			{
-				// Play sound
-				if (skidIsPlaying == false)
-				{
-					SoundManager.playBackgroundSound("Skid2");
-
-					skidIsPlaying = true;
-				}
 
 				if (left)
 				{
@@ -134,10 +127,6 @@ public class Movement extends GameObject
 
 			engineIsPlaying = false;
 
-			// Stop sound
-			SoundManager.stopBackgroundSound("Skid2");
-
-			skidIsPlaying = false;
 
 		}
 
