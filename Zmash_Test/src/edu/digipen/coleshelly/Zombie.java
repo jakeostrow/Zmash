@@ -66,6 +66,9 @@ public class Zombie extends GameObject
 	// throw timer
 	private float throwTimer = 2;
 
+	// is the zombie dead
+	public boolean isZombieDead = false;
+
 
 	public Zombie(String name, float speed_)
 	{
@@ -306,6 +309,9 @@ public class Zombie extends GameObject
 
 			// Fade out
 			this.setOpacity(0);
+
+			// kill
+			isZombieDead = true;
 
 			if (hasDied == true)
 			{

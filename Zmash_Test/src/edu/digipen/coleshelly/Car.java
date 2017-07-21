@@ -5,7 +5,6 @@ import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
-import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 
@@ -21,10 +20,10 @@ public class Car extends Movement
 	public float normalSpeed = 0;
 
 	// Maximum Health
-	public float MaxHealth = 30;
+	public float MaxHealth = 70;
 
 	// Current Health
-	public float Health = 30;
+	public float Health = 70;
 
 	// Is the car drowning
 	private boolean drowning = false;
@@ -67,6 +66,7 @@ public class Car extends Movement
 
 		// add health bar
 		ObjectManager.addGameObject(healthBar);
+		healthBar.setZOrder(5);
 
 		setRectangleCollider(20, 20);
 		slowDownTimer = new Timer(0.5f);
@@ -254,9 +254,11 @@ public class Car extends Movement
 		// size based on health
 		float scale = (Health / MaxHealth);
 
-		System.out.println(scale);
-
-		healthBar.setScaleY(scale);
+		// if scale is greater than zero
+		if (scale > 0)
+		{
+			healthBar.setScaleY(scale);
+		}
 	}
 
 	public void applyDamage(int damage)
@@ -297,9 +299,6 @@ public class Car extends Movement
 		{
 			// set game over
 			gameOver = true;
-
-			// go to home screen
-			GameLevelManager.restartLevel();
 		}
 	}
 

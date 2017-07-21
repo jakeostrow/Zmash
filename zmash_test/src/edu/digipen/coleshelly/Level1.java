@@ -1,11 +1,16 @@
 package edu.digipen.coleshelly;
 
+import edu.digipen.InputManager;
 import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.level.GameLevel;
+import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
+
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by jake.ostrow on 7/17/2017.
@@ -14,6 +19,16 @@ public class Level1 extends GameLevel
 {
 
 	// Game start timer
+	float gameStartTimer = 1;
+
+	// game over?
+	boolean gameOver = false;
+
+	// is paused
+	boolean isPaused = false;
+
+	// time till pause
+	float timeTillPause = 1;
 
 	@Override public void create()
 	{
@@ -27,7 +42,9 @@ public class Level1 extends GameLevel
 		SoundManager.addBackgroundSound("Seagulls", "Seagulls.wav", true);
 
 		// Add car sounds
-		SoundManager.addBackgroundSound("SportsCar1Steady", "SportsCar1Steady.wav", true);
+		SoundManager
+				.addBackgroundSound("SportsCar1Steady", "SportsCar1Steady.wav",
+						true);
 
 		// Add bob landing sounds
 		SoundManager.addBackgroundSound("Dirt3", "Dirt3.wav", true);
@@ -51,7 +68,8 @@ public class Level1 extends GameLevel
 		//////////////////////////// LEVEL ////////////////////////////
 
 		// Add the background
-		GameObject background = new GameObject("Background", 3000, 1500, "landTile.png");
+		GameObject background = new GameObject("Background", 3000, 1500,
+				"landTile.png");
 		background.setZOrder(-2);
 		ObjectManager.addGameObject(background);
 
@@ -64,7 +82,6 @@ public class Level1 extends GameLevel
 		GameObject car = new Car();
 		ObjectManager.addGameObject(car);
 
-
 		// Add test zombie to level
 		for (int i = 0; i < 20; i++)
 		{
@@ -75,9 +92,8 @@ public class Level1 extends GameLevel
 			// Scale
 			int scale = PFRandom.randomRange(50, 80);
 			GameObject rock = new CircleObstacle(scale, scale, "rock.png", true);
-			rock.setPosition(PFRandom.randomRange(-1000, 1000),PFRandom.randomRange(-500, 500));
+			rock.setPosition(PFRandom.randomRange(-1000, 1000), PFRandom.randomRange(-500, 500));
 			ObjectManager.addGameObject(rock);
-
 
 			/////////MORE SOUND/////////
 
@@ -90,13 +106,108 @@ public class Level1 extends GameLevel
 			// Play wind sound
 			SoundManager.playBackgroundSound("Wind2");
 
-
 		}
 	}
 
-	@Override public void update(float v)
+	@Override public void update(float dt)
 	{
+		// If space key is pressed
+		if (InputManager.isPressed(KeyEvent.VK_ESCAPE))
+		{
+			// swich to home screen
+			GameLevelManager.goToLevel(new HomeScreen());
+		}
 
+
+		// decrement timer
+		if (gameStartTimer < 0)
+		{
+			if (gameOver == false)
+			{
+				// check for zombies
+				ArrayList<GameObject> zombie = ObjectManager
+						.getGameObjectsByName("Zombie");
+
+				// number of live zombie
+				float numLiveZombies = 0;
+
+				for (GameObject z : zombie)
+				{
+					if (!((Zombie) z).isZombieDead)
+						// increment num of zombies
+						numLiveZombies += 1;
+				}
+
+				System.out.println("game over");
+
+				if (numLiveZombies == 0)
+				{
+					EndGameDropDown victoryDropdown = new EndGameDropDown(true);
+					victoryDropdown.bringDown();
+					ObjectManager.addGameObject(victoryDropdown);
+
+					// game over = true
+					gameOver = true;
+				}
+
+				////////////////////////////// FAILURE //////////////////////////////////
+				// check for car
+				GameObject car = ObjectManager.getGameObjectByName("Car");
+
+				if (((Car) car).gameOver)
+				{
+					// failure
+					EndGameDropDown victoryDropdown = new EndGameDropDown(false);
+					victoryDropdown.bringDown();
+					ObjectManager.addGameObject(victoryDropdown);
+
+					// game over = true
+					gameOver = true;
+				}
+			}
+		}
+
+		if (gameOver)
+		{
+			timeTillPause -= dt;
+		}
+
+		if (timeTillPause < 0)
+		{
+			// pause
+			isPaused = true;
+		}
+
+		// pause
+		if (isPaused)
+		{
+			// pause game objects
+			ObjectManager.pauseAllObjects();
+
+			// If space key is pressed
+			if (InputManager.isPressed(KeyEvent.VK_SPACE))
+			{
+				ObjectManager.unpauseAllObjects();
+
+				isPaused = false;
+
+				gameOver = false;
+
+				timeTillPause = 1;
+
+				// Reset level
+				GameLevelManager.restartLevel();
+
+			}
+		}
+		else
+		{
+			// un-pause
+			ObjectManager.unpauseAllObjects();
+		}
+
+		// game start timer
+		gameStartTimer -= dt;
 	}
 
 

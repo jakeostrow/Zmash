@@ -2,7 +2,6 @@ package edu.digipen.coleshelly;
 
 import edu.digipen.InputManager;
 import edu.digipen.gameobject.GameObject;
-import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
 import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.Vec2;
@@ -21,7 +20,7 @@ public class EndGameDropDown extends GameObject
 
 	public EndGameDropDown(boolean victory)
 	{
-		super("EndGameDropdownVictory" + victory, 946 / 3, 1222 / 3, "failureDropDown.png");
+		super("EndGameDropdownVictory" + victory, 946 / 3, 1222 / 3, "endGameDropdown" + victory + ".png");
 
 		// Put it in front
 		this.setZOrder(10);
@@ -46,8 +45,6 @@ public class EndGameDropDown extends GameObject
 		// If it has descended completely, pause game
 		if (this.getPositionY() < 0 + Graphics.getCameraPosition().getY())
 		{
-			// Pause Game
-			ObjectManager.pauseAllObjects();
 
 		}
 
@@ -59,13 +56,9 @@ public class EndGameDropDown extends GameObject
 		// If space key is pressed
 		if (InputManager.isPressed(KeyEvent.VK_SPACE))
 		{
-			// UnPause Game
-			ObjectManager.unpauseAllObjects();
-
 			// Reset level
 			GameLevelManager.restartLevel();
 
-			System.out.println("level restart");
 		}
 
 	}
