@@ -18,6 +18,7 @@ public class ArrowKeyPrompt extends GameObject
 	@Override public void update(float v)
 	{
 		this.setPositionY(this.getPositionY() + Graphics.getCameraPosition().getY());
+		
 
 	}
 
