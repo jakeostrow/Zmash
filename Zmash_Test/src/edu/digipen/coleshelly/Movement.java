@@ -14,8 +14,8 @@ public class Movement extends GameObject
 {
 
 	// Direction in which ship is facing (starts out facing down positive x axis)
-	private Vec2 Acceleration = new Vec2(1, 0);
-	private Vec2 Velocity = new Vec2(0, 0);
+	private Vec2 Acceleration;
+	private Vec2 Velocity;
 	private float Speed = 200.0f;
 
 	public float turnSpeed = 0;
@@ -27,6 +27,8 @@ public class Movement extends GameObject
 	public Movement(String name_, int width_, int height_, String textureName_)
 	{
 		super(name_, width_, height_, textureName_);
+		Acceleration = new Vec2(1, 0);
+		Velocity = new Vec2(0, 0);
 		Acceleration.scale(Speed);
 	}
 

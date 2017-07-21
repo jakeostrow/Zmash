@@ -62,6 +62,9 @@ public class Zombie extends GameObject
 	// Velocity
 	private Vec2 velocity = new Vec2(0, 0);
 
+	// throw timer
+	private float throwTimer = 2;
+
 
 	public Zombie(String name, float speed_)
 	{
@@ -175,6 +178,26 @@ public class Zombie extends GameObject
 
 				}
 			}
+
+			// if throw timer is up
+			if (throwTimer < 0)
+			{
+				// throw
+				GameObject throwingRock = new ThrowingRock(this.getPosition());
+				// add
+				ObjectManager.addGameObject(throwingRock);
+
+				// apply damage to car
+				((Car)car).applyDamage(1);
+				// screen shake
+				((Car)car).shakeScreen(0.2f);
+
+				// reset throw timer
+				throwTimer = 2;
+			}
+
+			// decrement throw timer
+			throwTimer -= dt;
 		}
 
 		////////////////////////////////// ZOMBIE-CAR COLLISION /////////////////////////////////////////
@@ -203,7 +226,7 @@ public class Zombie extends GameObject
 		collisionCirclePosition.setY(collisionCirclePosition.getY() + car.getPositionY());
 
 		// If the zombie collides with the car
-		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, collisionCirclePosition, car.getWidth() / 1.5f))
+		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, collisionCirclePosition, car.getWidth()))
 		{
 			// Car speed
 			Vec2 velocityVector = (((Car)car).getMovementVelocity());
@@ -381,8 +404,8 @@ public class Zombie extends GameObject
 			GameObject car = ObjectManager.getGameObjectByName("Car");
 
 			Vec2 throwVelocity = new Vec2(((Car)car).getMovementVelocity());
-			throwVelocity.scale(2.5f);
-			this.setVelocity(throwVelocity);
+			throwVelocity.scale(5f);
+			velocity = throwVelocity;
 
 			// Subtract damage from health
 			ZombieHealth -= damage;
@@ -390,7 +413,7 @@ public class Zombie extends GameObject
 			if (ZombieHealth == 0)
 			{
 				// set remaining life timer
-				remainingLifeTimer = 1;
+				remainingLifeTimer = 3;
 
 				// start timer
 				lifeTimerStarted = true;

@@ -3,7 +3,6 @@ package edu.digipen.coleshelly;
 import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
-import edu.digipen.graphics.Graphics;
 import edu.digipen.level.GameLevel;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
@@ -18,18 +17,6 @@ public class Level1 extends GameLevel
 
 	@Override public void create()
 	{
-
-		//////////////////////////// LEVEL ////////////////////////////
-
-		// Add the background
-		GameObject background = new GameObject("Background", 3000, 1500, "landTile.png");
-		background.setZOrder(-2);
-		ObjectManager.addGameObject(background);
-
-		// Add the ocean
-		GameObject ocean = new GameObject("Ocean", 12000, 6000, "oceanTile.png");
-		ocean.setZOrder(-3);
-		ObjectManager.addGameObject(ocean);
 
 		////////////////////////////// SOUNDS ///////////////////////////////
 
@@ -61,7 +48,18 @@ public class Level1 extends GameLevel
 
 	@Override public void initialize()
 	{
-		Graphics.setDrawCollisionData(true);
+		//////////////////////////// LEVEL ////////////////////////////
+
+		// Add the background
+		GameObject background = new GameObject("Background", 3000, 1500, "landTile.png");
+		background.setZOrder(-2);
+		ObjectManager.addGameObject(background);
+
+		// Add the ocean
+		GameObject ocean = new GameObject("Ocean", 12000, 6000, "oceanTile.png");
+		ocean.setZOrder(-3);
+		ObjectManager.addGameObject(ocean);
+
 		// Add car to level
 		GameObject car = new Car();
 		ObjectManager.addGameObject(car);
@@ -77,7 +75,7 @@ public class Level1 extends GameLevel
 			// scale
 			int scale = PFRandom.randomRange(30, 60);
 			GameObject rock = new CircleObstacle(scale, scale, "rock.png", true);
-			rock.setPosition(PFRandom.randomRange(-200, 200),PFRandom.randomRange(-200, 200));
+			rock.setPosition(PFRandom.randomRange(-1000, 1000),PFRandom.randomRange(-500, 500));
 			ObjectManager.addGameObject(rock);
 
 
@@ -105,10 +103,7 @@ public class Level1 extends GameLevel
 	@Override public void uninitialize()
 	{
 		// Remove unused things
-		ObjectManager.removeAllObjectsByName("Zombie");
-		ObjectManager.removeAllObjectsByName("CircleObstacle");
-		ObjectManager.removeAllObjectsByName("Car");
-		ObjectManager.removeAllObjectsByName("CarFacade");
+		ObjectManager.removeAllObjects();
 	}
 
 	public void addZombie()
@@ -117,7 +112,7 @@ public class Level1 extends GameLevel
 		Vec2 position = new Vec2(PFRandom.randomRange(-800f, -400f), PFRandom.randomRange(-400f, 400f));
 
 		// Add zombie
-		GameObject zombie = new Zombie("Zombie", PFRandom.randomRange(1.5f, 2.5f));
+		GameObject zombie = new Zombie("Zombie", PFRandom.randomRange(1.0f, 2.0f));
 		zombie.setPosition(position);
 		ObjectManager.addGameObject(zombie);
 
