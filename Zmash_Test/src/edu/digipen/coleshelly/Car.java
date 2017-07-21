@@ -5,6 +5,7 @@ import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.graphics.Graphics;
+import edu.digipen.level.GameLevelManager;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
 
@@ -20,10 +21,10 @@ public class Car extends Movement
 	public float normalSpeed = 0;
 
 	// Maximum Health
-	public int MaxHealth = 10;
+	public float MaxHealth = 30;
 
 	// Current Health
-	public int Health = 10;
+	public float Health = 30;
 
 	// Is the car drowning
 	private boolean drowning = false;
@@ -40,9 +41,20 @@ public class Car extends Movement
 	// Is the game over?
 	boolean gameOver = false;
 
+	// timer
 	public float Timer = 0;
 
+	// timer that runs when a car hits a rock
 	public Timer slowDownTimer;
+
+	// smoke active
+	private boolean smokeActive = false;
+
+	// health bar
+	GameObject healthBar = new GameObject("HealthBar", 10, 800, "healthBar.png");
+
+	// health bar's original height
+	float healthBarOriginalHeight = healthBar.getHeight();
 
 
 	public Car()
@@ -53,8 +65,14 @@ public class Car extends Movement
 		GameObject carFacade = new CarFacade();
 		ObjectManager.addGameObject(carFacade);
 
+		// add health bar
+		ObjectManager.addGameObject(healthBar);
+
+		GameObject arrowKeys = new ArrowKeyPrompt();
+		ObjectManager.addGameObject(arrowKeys);
+
 		setRectangleCollider(20, 20);
-		slowDownTimer = new Timer(1.6f);
+		slowDownTimer = new Timer(0.5f);
 		normalSpeed = super.getSpeed();
 	}
 
@@ -148,29 +166,29 @@ public class Car extends Movement
 		if (land != null)
 		{
 			// Top right side of island
-			if (checkPointLineCollision(this.getPosition(), new Vec2(0, land.getHeight() / 2 + 100),
-					new Vec2(land.getWidth() / 2 + 100, 0), true))
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, land.getHeight() / 2 + 50),
+					new Vec2(land.getWidth() / 2 + 50, 0), true))
 			{
 				drowning = true;
 			}
 
 			// Top left side of island
-			if (checkPointLineCollision(this.getPosition(), new Vec2(0, land.getHeight() / 2 + 100),
-					new Vec2(-land.getWidth() / 2 - 100, 0), true))
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, land.getHeight() / 2 + 50),
+					new Vec2(-land.getWidth() / 2 - 50, 0), true))
 			{
 				drowning = true;
 			}
 
 			// Bottom right side of island
-			if (checkPointLineCollision(this.getPosition(), new Vec2(0, -land.getHeight() / 2 - 100),
-					new Vec2(land.getWidth() / 2 + 100, 0), false))
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, -land.getHeight() / 2 - 50),
+					new Vec2(land.getWidth() / 2 + 50, 0), false))
 			{
 				drowning = true;
 			}
 
 			// Bottom left side of island
-			if (checkPointLineCollision(this.getPosition(), new Vec2(0, -land.getHeight() / 2 - 100),
-					new Vec2(-land.getWidth() / 2 - 100, 0), false))
+			if (checkPointLineCollision(this.getPosition(), new Vec2(0, -land.getHeight() / 2 - 50),
+					new Vec2(-land.getWidth() / 2 - 50, 0), false))
 			{
 				drowning = true;
 			}
@@ -182,27 +200,66 @@ public class Car extends Movement
 			GameObject carFacade = ObjectManager
 					.getGameObjectByName("CarFacade");
 
-			// Fade out car
-			carFacade.setOpacity(carFacade.getOpacity() - 0.01f);
-
-			// Random splash
-			GameObject splash = new Splash(new Vec2(this.getPositionX() + PFRandom.randomRange(-20, 20),
-					this.getPositionY() + PFRandom.randomRange(-20, 20)));
-
-			// Play sound once you drown
-			if (hasPlayed == false)
+			if (carFacade != null)
 			{
-				SoundManager.playSoundEffect("WaterSplash");
 
-				hasPlayed = true;
-			}
-			// Reset position
-			if (carFacade.getOpacity() < 0)
-			{
-				// Kill
-				kill();
+				// Fade out car
+				carFacade.setOpacity(carFacade.getOpacity() - 0.01f);
+
+				// Random splash
+				GameObject splash = new Splash(new Vec2(this.getPositionX() + PFRandom.randomRange(-20, 20),
+						this.getPositionY() + PFRandom.randomRange(-20, 20)));
+
+				// Play sound once you drown
+				if (hasPlayed == false)
+				{
+					SoundManager.playSoundEffect("WaterSplash");
+
+					hasPlayed = true;
+				}
+				// Reset position
+				if (carFacade.getOpacity() < 0)
+				{
+					// Kill
+					killCar();
+				}
 			}
 		}
+
+		///////////////////////////// SMOKE //////////////////////////////////////////
+		// if health is critical
+		if (Health < 10) {
+			// activate smoke
+			smokeActive = true;
+		} else {
+			// deactivate smoke
+			smokeActive = false;
+		}
+
+		// if smoke is activated
+		if (smokeActive)
+		{
+			// position
+			Vec2 position = new Vec2(this.getPositionX() + Tools.GetVectorFromAngle(this.getRotation(), 20).getX(),
+								     this.getPositionY() + Tools.GetVectorFromAngle(this.getRotation(), 20).getX());
+
+			// smoke object
+			GameObject smokeObject = new SmokeObject(this.getPosition());
+			// add
+			ObjectManager.addGameObject(smokeObject);
+		}
+
+		///////////////////////////////////////// HEALTH BAR /////////////////////////////////////////
+		// health bar position
+		healthBar.setPositionX(Graphics.getCameraPosition().getX() - (Graphics.getWindowWidth() / 2) + 50);
+		healthBar.setPositionY(Graphics.getCameraPosition().getY() - healthBar.getHeight() / 4);
+
+		// size based on health
+		float scale = (Health / MaxHealth);
+
+		System.out.println(scale);
+
+		healthBar.setScaleY(scale);
 	}
 
 	public void applyDamage(int damage)
@@ -213,9 +270,10 @@ public class Car extends Movement
 			// Subtract damage from health
 			Health -= damage;
 		}
+
 		if (Health < 0)
 		{
-			kill();
+			killCar();
 
 			if (explosionIsPlayed == false)
 			{
@@ -236,22 +294,15 @@ public class Car extends Movement
 		}
 	}
 
-	public void kill()
+	public void killCar()
 	{
 		if (gameOver == false)
 		{
 			// set game over
-//			gameOver = true;
+			gameOver = true;
 
-//			// remove all objects
-//			ObjectManager.removeAllObjects();
-//
-//			// go to home screen
-//			GameLevelManager.goToLevel(new HomeScreen());
-
-			this.setPosition(0,0);
-
-			heal(10);
+			// go to home screen
+			GameLevelManager.restartLevel();
 		}
 	}
 
