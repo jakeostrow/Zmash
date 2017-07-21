@@ -72,8 +72,8 @@ public class Level1 extends GameLevel
 			addZombie();
 
 			// Add rock
-			// scale
-			int scale = PFRandom.randomRange(30, 60);
+			// Scale
+			int scale = PFRandom.randomRange(50, 80);
 			GameObject rock = new CircleObstacle(scale, scale, "rock.png", true);
 			rock.setPosition(PFRandom.randomRange(-1000, 1000),PFRandom.randomRange(-500, 500));
 			ObjectManager.addGameObject(rock);

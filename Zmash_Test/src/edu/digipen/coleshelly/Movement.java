@@ -114,7 +114,7 @@ public class Movement extends GameObject
 				}
 			}
 
-			// turn time
+			// Turn time
 			turnTime += dt;
 		}
 
@@ -144,11 +144,11 @@ public class Movement extends GameObject
 		setPositionX(getPositionX() + Velocity.getX() * dt);
 		setPositionY(getPositionY() + Velocity.getY() * dt);
 
-		// reset turn time if left or right keys are released
+		// Reset turn time if left or right keys are released
 		if(InputManager.isReleased(KeyEvent.VK_LEFT)||InputManager.isReleased(KeyEvent.VK_RIGHT))
 
 		{
-			// reset turn time
+			// Reset turn time
 			turnTime = 0;
 		}
 	}

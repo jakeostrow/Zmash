@@ -38,7 +38,7 @@ public class Car extends Movement
 	// Has the explosion sound played?
 	private boolean explosionIsPlayed = false;
 
-	// is the game over?
+	// Is the game over?
 	boolean gameOver = false;
 
 	// timer
