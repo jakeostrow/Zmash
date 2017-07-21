@@ -1,10 +1,13 @@
 package edu.digipen.coleshelly;
 
+import edu.digipen.InputManager;
 import edu.digipen.SoundManager;
 import edu.digipen.gameobject.GameObject;
 import edu.digipen.gameobject.ObjectManager;
 import edu.digipen.math.PFRandom;
 import edu.digipen.math.Vec2;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Created by cole.shelly on 7/17/2017.
@@ -41,8 +44,8 @@ public class Zombie extends GameObject
 	// Time when zombie lands
 	public float landingTimer = 0;
 
-	// Zombie mode; 0 = normal 'point and chase,' 1 = grabbed onto car, 2 = dead;
-	public int zombieMode = 0;
+	// Zombie mode; 0 = normal 'point and chase,' 1 = grabbed onto car, 2 = dead, 3 = stagnant;
+	public int zombieMode = 3;
 
 	// Car rope
 	public GameObject rope = new GameObject("Rope", 200, 3, "rope.png");
@@ -70,7 +73,7 @@ public class Zombie extends GameObject
 
 	// is the zombie dead
 	public boolean isZombieDead = false;
-	
+
 	public Zombie(String name, float speed_)
 	{
 		// Call the base constructor
@@ -101,6 +104,8 @@ public class Zombie extends GameObject
 		// Make rope invisible
 		rope.setOpacity(0);
 
+		((Car)car).shakeOffTextActive = false;
+
 		///////////////////////////// ZOMBIE PATH-FINDING ( MODE 0 ) ////////////////////////////////
 
 		// CHECK THAT ZOMBIE IS IN CORRECT MODE
@@ -126,6 +131,9 @@ public class Zombie extends GameObject
 		// CHECK THAT ZOMBIE IS IN CORRECT MODE
 		if (zombieMode == 1)
 		{
+			// shake off text true
+			((Car)car).shakeOffTextActive = true;
+
 			// Make rope visible
 			rope.setOpacity(1);
 			// Move rope to proper location
@@ -378,6 +386,17 @@ public class Zombie extends GameObject
 
 		// Set velocity on zombie
 		this.setVelocity(velocity);
+
+		//////////////////////////////// START /////////////////////////////////////////
+		// if arrow keys pressed
+		if (InputManager.isTriggered(KeyEvent.VK_UP))
+		{
+			if (zombieMode == 3)
+			{
+				// make zombies move
+				zombieMode = 0;
+			}
+		}
 
 	}
 

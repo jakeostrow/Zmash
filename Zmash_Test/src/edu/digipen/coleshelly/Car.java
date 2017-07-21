@@ -55,6 +55,9 @@ public class Car extends Movement
 	// health bar's original height
 	float healthBarOriginalHeight = healthBar.getHeight();
 
+	// shake off text active
+	boolean shakeOffTextActive = false;
+
 
 	public Car()
 	{
@@ -68,8 +71,11 @@ public class Car extends Movement
 		ObjectManager.addGameObject(healthBar);
 		healthBar.setZOrder(5);
 
+		// arrow key prompt
 		GameObject arrowKeys = new ArrowKeyPrompt();
 		ObjectManager.addGameObject(arrowKeys);
+
+		// shake off text
 
 		setRectangleCollider(20, 20);
 		slowDownTimer = new Timer(0.5f);

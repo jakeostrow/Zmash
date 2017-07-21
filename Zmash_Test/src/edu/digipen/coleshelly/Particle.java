@@ -50,6 +50,28 @@ public class Particle extends GameObject
 		// Make sure to check if the particle has died
 		if (!this.isDead())
 		{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			// Decrement lifeTimer by dt (subtract dt from lifeTimer)
 			lifeTimer -= dt;
 		}
