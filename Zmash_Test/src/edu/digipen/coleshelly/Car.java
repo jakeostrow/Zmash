@@ -40,6 +40,8 @@ public class Car extends Movement
 
 	public float Timer = 0;
 
+	boolean resetTimer = false;
+
 
 	public Car()
 	{
@@ -60,7 +62,8 @@ public class Car extends Movement
 
 		if (Timer < -3)
 		{
-			setSpeed(getSpeed() * 1);
+			setSpeed(getSpeed() * 0.5f);
+
 		}
 
 		// Move car through movement class
@@ -324,6 +327,12 @@ public class Car extends Movement
 //					Vec2.scale(super.getMovementVelocity(), super.dt));
 			setSpeed(getSpeed() / 2);
 
+			//if (resetTimer == false)
+			//{
+			//	setSpeed(200);
+			//	resetTimer = true;
+			//}
+			setSpeed(200);
 
 		}
 
