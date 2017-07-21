@@ -58,8 +58,11 @@ public class Level1 extends GameLevel
 		// Wind
 		SoundManager.addBackgroundSound("Wind2", "Wind2.wav", true);
 
-		// Blood Sound
+		// Blood sound
 		SoundManager.addSoundEffect("Gravel3", "Gravel3.wav");
+
+		// Blood sound 2
+		SoundManager.addSoundEffect("Grass4", "Grass4.wav");
 
 	}
 
@@ -220,7 +223,7 @@ public class Level1 extends GameLevel
 	public void addZombie()
 	{
 		// Generate random position
-		Vec2 position = new Vec2(PFRandom.randomRange(-800f, -400f), PFRandom.randomRange(-400f, 400f));
+		Vec2 position = new Vec2(PFRandom.randomRange(-800f, -700f), PFRandom.randomRange(-400f, 400f));
 
 		// Add zombie
 		GameObject zombie = new Zombie("Zombie", PFRandom.randomRange(1.0f, 2.0f));

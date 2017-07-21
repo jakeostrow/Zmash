@@ -68,6 +68,9 @@ public class Car extends Movement
 		ObjectManager.addGameObject(healthBar);
 		healthBar.setZOrder(5);
 
+		GameObject arrowKeys = new ArrowKeyPrompt();
+		ObjectManager.addGameObject(arrowKeys);
+
 		setRectangleCollider(20, 20);
 		slowDownTimer = new Timer(0.5f);
 		normalSpeed = super.getSpeed();

@@ -36,6 +36,8 @@ public class Zombie extends GameObject
 	// Blood sounds
 	boolean bloodIsPlaying = false;
 
+	boolean blood2IsPlaying = false;
+
 	// Time when zombie lands
 	public float landingTimer = 0;
 
@@ -68,8 +70,7 @@ public class Zombie extends GameObject
 
 	// is the zombie dead
 	public boolean isZombieDead = false;
-
-
+	
 	public Zombie(String name, float speed_)
 	{
 		// Call the base constructor
@@ -79,7 +80,7 @@ public class Zombie extends GameObject
 		Speed = speed_;
 
 		// Add rope
-//		ObjectManager.addGameObject(rope);
+		//		ObjectManager.addGameObject(rope);
 		// Opacity
 		rope.setOpacity(0);
 	}
@@ -95,8 +96,7 @@ public class Zombie extends GameObject
 		/////////////////////////////////////// ESSENTIALS ///////////////////////////////////////////
 
 		// Get the car from the object manager
-		GameObject car = ObjectManager
-				.getGameObjectByName("Car");
+		GameObject car = ObjectManager.getGameObjectByName("Car");
 
 		// Make rope invisible
 		rope.setOpacity(0);
@@ -117,8 +117,7 @@ public class Zombie extends GameObject
 			vector.normalize();
 
 			// Use the computed vector to move the enemy towards the player
-			this.setPositionX(this.getPositionX()
-					+ vector.getX() * Speed);
+			this.setPositionX(this.getPositionX() + vector.getX() * Speed);
 			this.setPositionY(this.getPositionY() + vector.getY() * Speed);
 		}
 
@@ -135,7 +134,8 @@ public class Zombie extends GameObject
 			rope.setZOrder(0);
 
 			// Rope offset
-			Vec2 ropePositionOffset = Tools.GetVectorFromAngle(car.getRotation(), -19);
+			Vec2 ropePositionOffset = Tools
+					.GetVectorFromAngle(car.getRotation(), -19);
 
 			// Add to rope position X
 			rope.setPositionX(rope.getPositionX() + ropePositionOffset.getX());
@@ -150,7 +150,8 @@ public class Zombie extends GameObject
 			float run = lastCarPos.getX() - car.getPositionX();
 
 			// Rotation that points towards movement
-			float rotation = Tools.GetAngleFromVector(((Movement)car).getMovementVelocity());
+			float rotation = Tools
+					.GetAngleFromVector(((Movement) car).getMovementVelocity());
 
 			// Add rope offset to rotation
 			rotation += ropeOffset;
@@ -171,19 +172,22 @@ public class Zombie extends GameObject
 			ObjectManager.addGameObject(carTrail1);
 
 			// If car swerves
-			if (((Car)car).turnTime > 4.2)
+			if (((Car) car).turnTime > 4.2)
 			{
 				// Throw zombie off
 				zombieMode = 0;
 
 				// Turning right
-				if (((Car)car).turnSpeed > 0)
+				if (((Car) car).turnSpeed > 0)
 				{
 					// Set velocity
-					velocity.set(Tools.GetVectorFromAngle(rope.getRotation() - 90, 300));
-				} else {
+					velocity.set(Tools.GetVectorFromAngle(rope.getRotation() - 90,
+									300));
+				} else
+				{
 					// Set velocity
-					velocity.set(Tools.GetVectorFromAngle(rope.getRotation() + 90, 300));
+					velocity.set(Tools.GetVectorFromAngle(rope.getRotation() + 90,
+									300));
 
 				}
 			}
@@ -197,9 +201,9 @@ public class Zombie extends GameObject
 				ObjectManager.addGameObject(throwingRock);
 
 				// apply damage to car
-				((Car)car).applyDamage(1);
+				((Car) car).applyDamage(1);
 				// screen shake
-				((Car)car).shakeScreen(0.2f);
+				((Car) car).shakeScreen(0.2f);
 
 				// reset throw timer
 				throwTimer = 2;
@@ -212,10 +216,11 @@ public class Zombie extends GameObject
 		////////////////////////////////// ZOMBIE-CAR COLLISION /////////////////////////////////////////
 
 		// If the zombie collides with the car
-		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, car.getPosition(), car.getWidth() / 2))
+		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2,
+				car.getPosition(), car.getWidth() / 2))
 		{
 			// TAKE HEALTH FROM THE CAR
-			((Car)car).applyDamage(1);
+			((Car) car).applyDamage(1);
 			if (zombieMode == 0)
 			{
 				// Attach to the car
@@ -229,16 +234,20 @@ public class Zombie extends GameObject
 		float carRotationRadians = (float) Math.toRadians(car.getRotation());
 
 		// Collision circle location
-		Vec2 collisionCirclePosition = new Vec2((float) (Math.cos(carRotationRadians) * 30), (float) (Math.sin(carRotationRadians) * 30));
+		Vec2 collisionCirclePosition = new Vec2((float) (Math.cos(carRotationRadians) * 30),
+				(float) (Math.sin(carRotationRadians) * 30));
 
-		collisionCirclePosition.setX(collisionCirclePosition.getX() + car.getPositionX());
-		collisionCirclePosition.setY(collisionCirclePosition.getY() + car.getPositionY());
+		collisionCirclePosition
+				.setX(collisionCirclePosition.getX() + car.getPositionX());
+		collisionCirclePosition
+				.setY(collisionCirclePosition.getY() + car.getPositionY());
 
 		// If the zombie collides with the car
-		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2, collisionCirclePosition, car.getWidth()))
+		if (checkCircleCircleCollision(this.getPosition(), this.getWidth() / 2,
+				collisionCirclePosition, car.getWidth()))
 		{
 			// Car speed
-			Vec2 velocityVector = (((Car)car).getMovementVelocity());
+			Vec2 velocityVector = (((Car) car).getMovementVelocity());
 
 			// Speed
 			float speed = velocityVector.getX() / velocityVector.getY();
@@ -249,7 +258,7 @@ public class Zombie extends GameObject
 			// Make sure car is moving, and make sure zombie mode is correct
 			if (speed > 0.8f)
 			{
-			// Take health from zombie
+				// Take health from zombie
 				this.applyDamage(1);
 			}
 		}
@@ -278,8 +287,7 @@ public class Zombie extends GameObject
 
 				landingIsPlaying = true;
 			}
-		}
-		else
+		} else
 		{
 			this.setPositionY(this.getPositionY() - 0.4f);
 
@@ -316,7 +324,8 @@ public class Zombie extends GameObject
 			if (hasDied == true)
 			{
 				// Add dead facade
-				GameObject deadZombie = new GameObject("DeadZombie", 244 / 15, 417 / 15, "zombieCrooked1.png");
+				GameObject deadZombie = new GameObject("DeadZombie", 244 / 15,
+						417 / 15, "zombieCrooked1.png");
 				deadZombie.setPosition(this.getPosition());
 				deadZombie.setRotation(90); // Rotate on it's side
 				ObjectManager.addGameObject(deadZombie);
@@ -325,19 +334,19 @@ public class Zombie extends GameObject
 				GameObject bloodPool = new BloodPool(this.getPosition());
 				ObjectManager.addGameObject(bloodPool);
 
-				((Car)car).shakeScreen(0.03f);
+				((Car) car).shakeScreen(0.03f);
 			}
 
 			// Reset has died
 			hasDied = false;
 		}
 
-		 if (landingTimer > 0)
-		 {
-			 landingTimer -= dt;
+		if (landingTimer > 0)
+		{
+			landingTimer -= dt;
 
-			 SoundManager.playBackgroundSound("Dirt3");
-		 }
+			SoundManager.playBackgroundSound("Dirt3");
+		}
 
 		// Decay rate
 		float decayRate = 2f;
@@ -372,17 +381,19 @@ public class Zombie extends GameObject
 
 	}
 
-
-	/***************************************************************************
+	/**
+	 * ************************************************************************
 	 * This function determines whether or not two objects with circle colliders
 	 * are colliding.
+	 *
 	 * @param c1Position The position (x, y coordinate) of the first circle
-	 * @param c1Radius	 The radius of the first circle
+	 * @param c1Radius   The radius of the first circle
 	 * @param c2Position The position (x, y coordinate) of the second circle
 	 * @param c2Radius   The radius of the second circle
 	 * @return TRUE if the two circles are colliding; FALSE if they are NOT
-	 * 		   colliding
-	 **************************************************************************/
+	 * colliding
+	 * ************************************************************************
+	 */
 	boolean checkCircleCircleCollision(Vec2 c1Position, float c1Radius, Vec2 c2Position,
 			float c2Radius)
 	{
@@ -401,8 +412,7 @@ public class Zombie extends GameObject
 		{
 			// Return true
 			return true;
-		}
-		else
+		} else
 		{
 			// Otherwise, return false;
 			return false;
@@ -417,7 +427,7 @@ public class Zombie extends GameObject
 
 			GameObject car = ObjectManager.getGameObjectByName("Car");
 
-			Vec2 throwVelocity = new Vec2(((Car)car).getMovementVelocity());
+			Vec2 throwVelocity = new Vec2(((Car) car).getMovementVelocity());
 			throwVelocity.scale(5f);
 			velocity = throwVelocity;
 
@@ -439,7 +449,7 @@ public class Zombie extends GameObject
 				ZombieHealth -= 1;
 
 				// Subtle screen shake
-				((Car)car).shakeScreen(0.04f);
+				((Car) car).shakeScreen(0.04f);
 
 				if (bloodIsPlaying == false)
 				{
@@ -451,9 +461,24 @@ public class Zombie extends GameObject
 				else
 				{
 					// Stop sound
-					SoundManager.stopBackgroundSound("Gravel3");
+					SoundManager.stopSoundEffect("Gravel3");
 
 					bloodIsPlaying = false;
+				}
+
+				if (blood2IsPlaying == false)
+				{
+					// Play sound
+					SoundManager.playSoundEffect("Grass4");
+
+					blood2IsPlaying = true;
+				}
+				else
+				{
+					// Stop sound
+					SoundManager.stopSoundEffect("Grass4");
+
+					blood2IsPlaying = false;
 				}
 			}
 		}
